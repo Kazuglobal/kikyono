@@ -96,13 +96,32 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.formStatus.set('submitting');
-    console.log('Form Submitted:', this.contactForm.value);
 
-    // Simulate API call
-    setTimeout(() => {
+    // Google Apps Script のウェブアプリURL
+    // TODO: Google Apps Scriptをデプロイ後、このURLを更新してください
+    const GAS_ENDPOINT = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+    // フォームデータを準備
+    const formData = this.contactForm.value;
+
+    // Google Apps Script にPOSTリクエスト送信
+    fetch(GAS_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors', // Google Apps Script用
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(() => {
+      // no-corsモードでは詳細なレスポンスが取得できないため、成功と見なす
       this.formStatus.set('success');
       this.contactForm.reset();
-    }, 1500);
+    })
+    .catch((error) => {
+      console.error('送信エラー:', error);
+      this.formStatus.set('error');
+    });
   }
 
   achievements = signal<Achievement[]>([
