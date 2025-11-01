@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>桔梗野バイオレッツ少年野球チーム | 公式サイト</title>
 
+  <!-- Preload Hero Images for better performance -->
+  <link rel="preload" as="image" href="assets/images/hero-team-mobile.jpg" media="(max-width: 640px)">
+  <link rel="preload" as="image" href="assets/images/hero-team-desktop.jpg" media="(min-width: 641px)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/hero-team.jpg" fetchpriority="high">
+
   <!-- SEO Meta Tags -->
   <meta name="description" content="青森県八戸市の少年野球チーム「桔梗野バイオレッツ」公式サイト。野球を通じて、最高の仲間と最高の瞬間を体験しませんか？新入部員、体験入部、随時募集中です！">
   <meta name="keywords" content="少年野球, 桔梗野バイオレッツ, 八戸市, 野球チーム, 小学生, スポーツ少年団">
@@ -260,6 +265,175 @@
     .animate-letter-reveal {
       opacity: 0; /* Initial state */
       animation: letter-reveal 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    }
+
+    /* Enhanced Section Animations */
+    @keyframes slide-in-left {
+      from {
+        opacity: 0;
+        transform: translateX(-60px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes slide-in-right {
+      from {
+        opacity: 0;
+        transform: translateX(60px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes zoom-in {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bounce-in {
+      0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(-50px);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      70% {
+        transform: scale(0.95);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes rotate-in {
+      from {
+        opacity: 0;
+        transform: rotate(-10deg) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Animated Background for sections */
+    .animate-gradient-bg {
+      background: linear-gradient(-45deg, #f8fafc, #f1f5f9, #e2e8f0, #f8fafc);
+      background-size: 400% 400%;
+      animation: gradient-shift 15s ease infinite;
+    }
+
+    .animate-slide-left {
+      opacity: 0;
+      animation: slide-in-left 0.8s ease-out forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 5%;
+      animation-range-end: cover 30%;
+    }
+
+    .animate-slide-right {
+      opacity: 0;
+      animation: slide-in-right 0.8s ease-out forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 5%;
+      animation-range-end: cover 30%;
+    }
+
+    .animate-zoom-in {
+      opacity: 0;
+      animation: zoom-in 0.8s ease-out forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 5%;
+      animation-range-end: cover 30%;
+    }
+
+    .animate-bounce-in {
+      opacity: 0;
+      animation: bounce-in 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 10%;
+      animation-range-end: cover 35%;
+    }
+
+    .animate-rotate-in {
+      opacity: 0;
+      animation: rotate-in 0.8s ease-out forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 5%;
+      animation-range-end: cover 30%;
+    }
+
+    /* Icon pulse animation */
+    @keyframes pulse-scale {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .animate-pulse-hover:hover {
+      animation: pulse-scale 0.6s ease-in-out infinite;
+    }
+
+    /* Floating elements animation */
+    @keyframes float-gentle {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-10px) rotate(2deg);
+      }
+      75% {
+        transform: translateY(-5px) rotate(-2deg);
+      }
+    }
+
+    .animate-float {
+      animation: float-gentle 3s ease-in-out infinite;
+    }
+
+    /* Achievement list item animation */
+    .achievement-item {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .achievement-item:hover {
+      transform: translateX(10px) scale(1.02);
+      box-shadow: 0 10px 30px -5px rgba(124, 58, 237, 0.2);
+    }
+
+    /* Schedule card animations */
+    .schedule-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.15);
     }
   </style>
 

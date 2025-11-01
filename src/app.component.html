@@ -58,8 +58,8 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">ABOUT US</h2>
           </div>
-          <p class="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl text-slate-600 animate-on-scroll px-2" [style.--stagger-delay]="'100ms'">桔梗野バイオレッツへようこそ！</p>
-          <p class="mt-4 sm:mt-6 md:mt-8 text-sm sm:text-base md:text-lg leading-relaxed animate-on-scroll px-2 sm:px-4" [style.--stagger-delay]="'200ms'">
+          <p class="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in px-2" [style.--stagger-delay]="'100ms'">桔梗野バイオレッツへようこそ！</p>
+          <p class="mt-4 sm:mt-6 md:mt-8 text-sm sm:text-base md:text-lg leading-relaxed animate-slide-left px-2 sm:px-4" [style.--stagger-delay]="'200ms'">
             私たちは、野球を愛する子どもたちのための少年野球チームです。勝利を目指すことはもちろん、野球を通じて礼儀、協調性、そして何よりも「楽しむ心」を育むことを大切にしています。経験豊富な指導者が、一人ひとりのレベルに合わせて丁寧に指導します。
           </p>
         </div>
@@ -73,9 +73,9 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">MEMBER COMPOSITION</h2>
           </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">現在の部員数</p>
+          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in" [style.--stagger-delay]="'100ms'">現在の部員数</p>
         </div>
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 animate-on-scroll" [style.--stagger-delay]="'150ms'">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 animate-bounce-in" [style.--stagger-delay]="'150ms'">
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8 text-center">
             @for (member of memberCount(); track member.grade; let i = $index) {
               <div>
@@ -99,12 +99,12 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">OUR VALUES</h2>
           </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-on-scroll px-2" [style.--stagger-delay]="'100ms'">私たちが大切にしていること</p>
+          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in px-2" [style.--stagger-delay]="'100ms'">私たちが大切にしていること</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           @for (value of teamValues(); track value.title; let i = $index) {
-            <div class="text-center p-6 sm:p-8 bg-slate-50 rounded-lg shadow-lg value-card animate-on-scroll" [style.--stagger-delay]="i * 150 + 'ms'">
-              <div class="inline-block p-3 sm:p-4 bg-violet-100 rounded-full">
+            <div class="text-center p-6 sm:p-8 bg-slate-50 rounded-lg shadow-lg value-card animate-rotate-in" [style.--stagger-delay]="i * 150 + 'ms'">
+              <div class="inline-block p-3 sm:p-4 bg-violet-100 rounded-full animate-pulse-hover animate-float">
                 <ion-icon [name]="value.icon" class="text-3xl sm:text-4xl md:text-5xl text-violet-600"></ion-icon>
               </div>
               <h3 class="mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl font-bold text-slate-900">{{ value.title }}</h3>
@@ -122,12 +122,12 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">ACHIEVEMENTS</h2>
           </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">主な大会実績</p>
+          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in" [style.--stagger-delay]="'100ms'">主な大会実績</p>
         </div>
         <div class="max-w-2xl mx-auto">
           <ul class="space-y-3 sm:space-y-4">
             @for (achievement of achievements(); track achievement.title; let i = $index) {
-              <li class="bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 transition-all hover:shadow-lg hover:bg-violet-50 hover:scale-[1.02] sm:hover:scale-[1.03] transform animate-on-scroll" [style.--stagger-delay]="i * 100 + 'ms'">
+              <li class="achievement-item bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 animate-slide-left" [style.--stagger-delay]="i * 100 + 'ms'">
                 <span class="text-slate-800 font-semibold text-sm sm:text-base md:text-lg flex-1">{{ achievement.title }}</span>
                 <span class="font-bold text-base sm:text-lg md:text-xl text-amber-500 tracking-wider whitespace-nowrap">{{ achievement.result }}</span>
               </li>
@@ -144,14 +144,14 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">PRACTICE & EVENTS</h2>
           </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">練習 & 年間行事</p>
+          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in" [style.--stagger-delay]="'100ms'">練習 & 年間行事</p>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16">
-          <div class="animate-on-scroll">
+          <div class="animate-slide-left">
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 text-slate-700">通常練習</h3>
             <div class="space-y-3 sm:space-y-4">
               @for (item of weeklySchedule(); track item.title) {
-                <div class="bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
+                <div class="schedule-card bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
                   <p class="font-bold text-base sm:text-lg md:text-xl text-violet-700">{{ item.title }}</p>
                   <p class="text-slate-600 font-semibold text-sm sm:text-base mt-1">{{ item.time }}</p>
                   <p class="text-slate-500 text-xs sm:text-sm mt-1">場所: {{ item.location }}</p>
@@ -160,12 +160,12 @@
               }
             </div>
           </div>
-          <div class="animate-on-scroll" [style.--stagger-delay]="'150ms'">
+          <div class="animate-slide-right" [style.--stagger-delay]="'150ms'">
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 text-slate-700">年間予定</h3>
-            <div class="bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
+            <div class="schedule-card bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
                 <ul class="space-y-2 sm:space-y-3">
                 @for (event of annualEvents(); track event.month; let i = $index) {
-                    <li class="flex items-center border-b border-slate-200 last:border-b-0 py-2 animate-on-scroll" [style.--stagger-delay]="i * 50 + 'ms'">
+                    <li class="flex items-center border-b border-slate-200 last:border-b-0 py-2 animate-zoom-in" [style.--stagger-delay]="i * 50 + 'ms'">
                     <span class="font-anton text-lg sm:text-xl md:text-2xl text-amber-500 w-12 sm:w-16 flex-shrink-0">{{ event.month }}</span>
                     <span class="text-slate-700 font-semibold text-sm sm:text-base md:text-lg flex-1">{{ event.event }}</span>
                     </li>
@@ -185,11 +185,11 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl animate-title-slide-in">MEMBER'S VOICE</h2>
           </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-violet-200 animate-on-scroll px-2" [style.--stagger-delay]="'100ms'">キャプテン・副キャプテンの声</p>
+          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-violet-200 animate-zoom-in px-2" [style.--stagger-delay]="'100ms'">キャプテン・副キャプテンの声</p>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
           @for (testimonial of testimonials(); track testimonial.name; let i = $index) {
-            <div class="bg-violet-700/50 p-6 sm:p-7 md:p-8 rounded-lg shadow-xl flex flex-col testimonial-card animate-on-scroll" [style.--stagger-delay]="i * 150 + 'ms'">
+            <div class="bg-violet-700/50 p-6 sm:p-7 md:p-8 rounded-lg shadow-xl flex flex-col testimonial-card animate-bounce-in" [style.--stagger-delay]="i * 150 + 'ms'">
               <p class="text-violet-100 flex-grow text-sm sm:text-base md:text-lg leading-relaxed">"{{ testimonial.quote }}"</p>
               <div class="mt-4 sm:mt-6 flex items-center">
                 <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover mr-3 sm:mr-4 border-2 border-violet-400 flex-shrink-0" [src]="testimonial.avatar" [alt]="testimonial.name">
@@ -211,14 +211,14 @@
                 <div class="section-title-container">
                     <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-900 animate-title-slide-in">新入部員 大歓迎！</h2>
                 </div>
-                <p class="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-800 font-semibold animate-on-scroll px-2" [style.--stagger-delay]="'100ms'">
+                <p class="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-800 font-semibold animate-zoom-in px-2" [style.--stagger-delay]="'100ms'">
                     野球に興味がある子、集まれ！体験入部はいつでもOK！
                 </p>
-                <div class="mt-6 sm:mt-8 max-w-2xl mx-auto bg-white/50 rounded-lg p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3 text-slate-700 font-medium animate-on-scroll px-4" [style.--stagger-delay]="'200ms'">
+                <div class="mt-6 sm:mt-8 max-w-2xl mx-auto bg-white/50 rounded-lg p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3 text-slate-700 font-medium animate-bounce-in px-4" [style.--stagger-delay]="'200ms'">
                     <p class="text-sm sm:text-base md:text-lg">※ 体験入部する人はお父さんかお母さんと一緒にきてね！</p>
                     <p class="font-bold text-base sm:text-lg md:text-xl">火・木・金・土・日、コーチはだいたいいます！</p>
                 </div>
-                <a href="#contact" class="mt-6 sm:mt-8 md:mt-10 inline-block bg-violet-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 md:px-10 rounded-full text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-violet-700 transition-transform transform hover:scale-105 animate-on-scroll" [style.--stagger-delay]="'300ms'">
+                <a href="#contact" class="mt-6 sm:mt-8 md:mt-10 inline-block bg-violet-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 md:px-10 rounded-full text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-violet-700 transition-transform transform hover:scale-105 animate-zoom-in" [style.--stagger-delay]="'300ms'">
                     お問い合わせはこちら
                 </a>
             </div>
@@ -232,13 +232,13 @@
           <div class="section-title-container">
             <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">JOIN US & CONTACT</h2>
           </div>
-          <p class="mt-3 sm:mt-4 md:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 animate-on-scroll px-2" [style.--stagger-delay]="'100ms'">
+          <p class="mt-3 sm:mt-4 md:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 animate-zoom-in px-2" [style.--stagger-delay]="'100ms'">
             野球をやってみたい、見学してみたい、どんなことでもお気軽にお問い合わせください！<br class="hidden sm:block">
             私たちと一緒に、最高の思い出を作りましょう！
           </p>
         </div>
 
-        <div class="mt-8 sm:mt-10 md:mt-12 max-w-2xl mx-auto animate-on-scroll" [style.--stagger-delay]="'150ms'">
+        <div class="mt-8 sm:mt-10 md:mt-12 max-w-2xl mx-auto animate-slide-left" [style.--stagger-delay]="'150ms'">
           @switch (formStatus()) {
             @case ('success') {
               <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 sm:p-5 md:p-6 rounded-lg shadow-md text-center" role="alert">
