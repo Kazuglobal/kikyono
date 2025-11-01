@@ -191,12 +191,9 @@
           @for (testimonial of testimonials(); track testimonial.name; let i = $index) {
             <div class="bg-violet-700/50 p-6 sm:p-7 md:p-8 rounded-lg shadow-xl flex flex-col testimonial-card animate-bounce-in" [style.--stagger-delay]="i * 150 + 'ms'">
               <p class="text-violet-100 flex-grow text-sm sm:text-base md:text-lg leading-relaxed">"{{ testimonial.quote }}"</p>
-              <div class="mt-4 sm:mt-6 flex items-center">
-                <img class="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover mr-3 sm:mr-4 border-2 border-violet-400 flex-shrink-0" [src]="testimonial.avatar" [alt]="testimonial.name">
-                <div>
-                  <p class="font-bold text-white text-lg sm:text-xl">{{ testimonial.name }}</p>
-                  <p class="text-violet-300 font-semibold text-sm sm:text-base">{{ testimonial.role }}</p>
-                </div>
+              <div class="mt-4 sm:mt-6">
+                <p class="font-bold text-white text-lg sm:text-xl">{{ testimonial.name }}</p>
+                <p class="text-violet-300 font-semibold text-sm sm:text-base">{{ testimonial.role }}</p>
               </div>
             </div>
           }
