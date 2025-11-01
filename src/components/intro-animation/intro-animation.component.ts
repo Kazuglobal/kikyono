@@ -1,5 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, OnDestroy, output, signal, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, ChangeDetectorRef, inject } from '@angular/core';
 
+
+const INTRO_AUDIO_SRC = 'assets/sounds/yakyu-shoyouze.mp3';
+const INTRO_AUDIO_TARGET_VOLUME = 0.7;
+const INTRO_AUDIO_FADE_DURATION_MS = 1200;
+const INTRO_AUDIO_FADE_STEP_MS = 100;
+
+
 @Component({
   selector: 'app-intro-animation',
   templateUrl: './intro-animation.component.html',
@@ -15,7 +22,45 @@ export class IntroAnimationComponent implements OnInit, AfterViewInit, OnDestroy
   activeImageIndex = signal(0);
   isComponentVisible = signal(true);
   private audio?: HTMLAudioElement;
+  private audioFadeIntervalId?: ReturnType<typeof setInterval>;
+  private autoplayAttemptInProgress = false;
   private hasPlayedSound = false;
+  private isComponentDestroyed = false;
+  private audioBlobUrl?: string;
+  private audioFallbackAttempted = false;
+  private readonly handleAudioCanPlay = () => {
+    if (this.isComponentDestroyed) {
+      return;
+    }
+
+    this.attemptAutoPlay();
+  };
+
+  private readonly handleAudioPlay = () => {
+    if (this.isComponentDestroyed) {
+      return;
+    }
+
+    this.hasPlayedSound = true;
+    this.autoplayAttemptInProgress = false;
+  };
+
+  private readonly handleAudioError = (event: Event) => {
+    console.error('Intro audio load error event:', event);
+
+    if (this.audio) {
+      console.error('Intro audio current src:', this.audio.src);
+    }
+
+    this.autoplayAttemptInProgress = false;
+
+    if (!this.audioFallbackAttempted && !this.isComponentDestroyed) {
+      this.audioFallbackAttempted = true;
+      void this.resolveAudioBlobSource();
+    }
+  };
+
+
   private cdr = inject(ChangeDetectorRef);
   private domClickHandler?: (e: Event) => void;
   private domTouchHandler?: (e: Event) => void;
@@ -161,82 +206,201 @@ export class IntroAnimationComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   private initAudio(): void {
-    try {
-      // 音声ファイルのパスを指定
-      this.audio = new Audio('assets/sounds/yakyu-shoyouze.mp3');
-      this.audio.volume = 0.7; // 音量を70%に設定
-      this.audio.preload = 'auto'; // 事前読み込みを有効化
-      
-      // 音声の読み込みエラーを処理
-      this.audio.addEventListener('error', (e) => {
-        console.error('音声ファイルの読み込みエラー:', e);
-        console.error('音声ファイルのパス:', this.audio?.src);
-      });
-      
-      // 音声の読み込みが完了したら自動再生を試みる
-      this.audio.addEventListener('canplaythrough', () => {
-        console.log('音声ファイルの読み込み完了');
-        this.attemptAutoPlay();
-      });
-      
-      // 音声の再生が開始されたとき
-      this.audio.addEventListener('play', () => {
-        console.log('音声が再生されました');
-      });
-      
-      // 音声の読み込みを開始
-      this.audio.load();
-    } catch (error) {
-      console.error('音声ファイルの初期化に失敗しました:', error);
+    if (this.isComponentDestroyed) {
+      return;
+    }
+
+    this.teardownAudioElement();
+
+    const audio = new Audio(INTRO_AUDIO_SRC);
+    audio.preload = 'auto';
+    audio.muted = true;
+    audio.volume = 0;
+
+    this.audio = audio;
+    this.autoplayAttemptInProgress = false;
+    this.hasPlayedSound = false;
+
+    audio.addEventListener('canplaythrough', this.handleAudioCanPlay);
+    audio.addEventListener('play', this.handleAudioPlay);
+    audio.addEventListener('error', this.handleAudioError);
+
+    audio.load();
+  }
+
+
+  private fadeInAudio(): void {
+    const audio = this.audio;
+    if (!audio) {
+      return;
+    }
+
+    this.clearAudioFadeInterval();
+
+    const steps = Math.max(1, Math.round(INTRO_AUDIO_FADE_DURATION_MS / INTRO_AUDIO_FADE_STEP_MS));
+    const volumeIncrement = INTRO_AUDIO_TARGET_VOLUME / steps;
+
+    audio.muted = false;
+    audio.volume = 0;
+
+    let currentStep = 0;
+    this.audioFadeIntervalId = setInterval(() => {
+      if (!this.audio) {
+        this.clearAudioFadeInterval();
+        return;
+      }
+
+      currentStep += 1;
+      const nextVolume = Math.min(INTRO_AUDIO_TARGET_VOLUME, this.audio.volume + volumeIncrement);
+      this.audio.volume = nextVolume;
+
+      if (currentStep >= steps || nextVolume >= INTRO_AUDIO_TARGET_VOLUME) {
+        this.clearAudioFadeInterval();
+        this.audio.volume = INTRO_AUDIO_TARGET_VOLUME;
+      }
+    }, INTRO_AUDIO_FADE_STEP_MS);
+  }
+
+  private clearAudioFadeInterval(): void {
+    if (this.audioFadeIntervalId) {
+      clearInterval(this.audioFadeIntervalId);
+      this.audioFadeIntervalId = undefined;
     }
   }
 
-  private attemptAutoPlay(): void {
-    if (!this.audio || this.hasPlayedSound) {
+  private teardownAudioElement(): void {
+    if (!this.audio) {
+      this.clearAudioFadeInterval();
+      this.autoplayAttemptInProgress = false;
+      this.hasPlayedSound = false;
+      this.revokeAudioBlobUrl();
       return;
     }
-    
-    // 音声が読み込まれているか確認
-    if (this.audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      console.log('自動再生を試みます...');
-      this.playSound().catch((error) => {
-        console.log('自動再生がブロックされました（これは正常な動作です）:', error.message);
-      });
-    } else {
-      console.log('音声ファイルの読み込み待機中...');
-      // 読み込み完了を待つ
-      this.audio.addEventListener('canplaythrough', () => {
-        this.playSound().catch((error) => {
-          console.log('自動再生がブロックされました（これは正常な動作です）:', error.message);
+
+    this.audio.removeEventListener('canplaythrough', this.handleAudioCanPlay);
+    this.audio.removeEventListener('play', this.handleAudioPlay);
+    this.audio.removeEventListener('error', this.handleAudioError);
+    this.audio.pause();
+    this.audio.src = '';
+
+    this.audio = undefined;
+    this.clearAudioFadeInterval();
+    this.autoplayAttemptInProgress = false;
+    this.hasPlayedSound = false;
+    this.revokeAudioBlobUrl();
+  }
+
+  private async resolveAudioBlobSource(): Promise<void> {
+    if (!this.audio || typeof fetch === 'undefined') {
+      return;
+    }
+
+    try {
+      const response = await fetch(INTRO_AUDIO_SRC, { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+
+      if (!this.audio || this.isComponentDestroyed) {
+        return;
+      }
+
+      const mimeType = this.detectAudioMimeType(response.headers.get('content-type'), arrayBuffer);
+
+      this.revokeAudioBlobUrl();
+
+      const blob = new Blob([arrayBuffer], { type: mimeType });
+      const objectUrl = URL.createObjectURL(blob);
+      this.audioBlobUrl = objectUrl;
+      this.audio.src = objectUrl;
+      this.audio.load();
+    } catch (error) {
+      console.error('Intro audio fallback load failed:', error);
+    }
+  }
+
+  private detectAudioMimeType(serverType: string | null, buffer: ArrayBuffer): string {
+    if (serverType && serverType !== 'application/octet-stream') {
+      return serverType;
+    }
+
+    if (buffer.byteLength >= 12) {
+      const headerBytes = new Uint8Array(buffer.slice(0, 12));
+      const headerText = String.fromCharCode(...headerBytes);
+      if (headerText.includes('ftyp')) {
+        return 'audio/mp4';
+      }
+    }
+
+    return 'audio/mpeg';
+  }
+
+  private revokeAudioBlobUrl(): void {
+    if (this.audioBlobUrl) {
+      URL.revokeObjectURL(this.audioBlobUrl);
+      this.audioBlobUrl = undefined;
+    }
+  }
+  private attemptAutoPlay(): void {
+    if (!this.audio || this.autoplayAttemptInProgress || this.hasPlayedSound) {
+      return;
+    }
+
+    const audio = this.audio;
+    this.autoplayAttemptInProgress = true;
+
+    audio.currentTime = 0;
+    audio.muted = true;
+    audio.volume = 0;
+    this.clearAudioFadeInterval();
+
+    const playResult = audio.play();
+
+    if (playResult !== undefined) {
+      playResult
+        .then(() => {
+          this.autoplayAttemptInProgress = false;
+          this.fadeInAudio();
+        })
+        .catch((error: any) => {
+          this.autoplayAttemptInProgress = false;
+          console.warn('Intro audio autoplay was blocked; waiting for user interaction.', error?.message ?? error);
         });
-      }, { once: true });
+    } else {
+      this.autoplayAttemptInProgress = false;
+      this.fadeInAudio();
     }
   }
 
   private async playSound(): Promise<void> {
     if (!this.audio) {
-      console.error('音声オブジェクトが初期化されていません');
+      console.error('音声オブジェクトが利用できません');
       return;
     }
-    
-    if (this.hasPlayedSound) {
-      console.log('音声は既に再生されています');
-      return;
-    }
-    
+
+    const audio = this.audio;
+    this.clearAudioFadeInterval();
+
+    audio.currentTime = 0;
+    audio.volume = 0;
+
     try {
-      // 音声を最初から再生
-      this.audio.currentTime = 0;
-      await this.audio.play();
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        await playPromise;
+      }
+
+      this.fadeInAudio();
       this.hasPlayedSound = true;
-      console.log('音声の再生に成功しました');
     } catch (error: any) {
-      console.error('音声の再生に失敗しました:', error.message);
+      console.error('音声の再生に失敗しました:', error?.message ?? error);
       throw error;
     }
   }
 
-  onScreenClick(event: MouseEvent | TouchEvent): void {
+  public onScreenClick(event: MouseEvent | TouchEvent): void {
     // イントロアニメーション画面がクリックされたときに音声を再生
     console.log('🎯 Angularテンプレートイベント: 画面がクリックされました', event.type);
     this.playSoundOnUserInteraction();
@@ -244,73 +408,21 @@ export class IntroAnimationComponent implements OnInit, AfterViewInit, OnDestroy
 
   private playSoundOnUserInteraction(): void {
     if (!this.audio) {
-      console.error('❌ 音声オブジェクトが存在しません');
+      console.error('音声オブジェクトが利用できません');
       return;
     }
-    
-    if (this.hasPlayedSound) {
-      console.log('ℹ️ 音声は既に再生済みです');
-      return;
-    }
-    
-    try {
-      console.log('🎵 ユーザー操作後の音声再生を試みます...');
-      console.log('音声の詳細:', {
-        readyState: this.audio.readyState,
-        paused: this.audio.paused,
-        src: this.audio.src,
-        duration: this.audio.duration,
-        volume: this.audio.volume
-      });
-      
-      // 音声を最初から再生
-      this.audio.currentTime = 0;
-      
-      // 再生を試みる
-      const playPromise = this.audio.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            this.hasPlayedSound = true;
-            console.log('🎉 音声の再生に成功しました！');
-            console.log('再生状態:', {
-              paused: this.audio?.paused,
-              currentTime: this.audio?.currentTime,
-              duration: this.audio?.duration
-            });
-          })
-          .catch((error: any) => {
-            console.error('❌ 音声の再生に失敗しました:', error);
-            console.error('エラー詳細:', {
-              name: error?.name,
-              message: error?.message,
-              code: (error as any)?.code,
-              stack: error?.stack
-            });
-            
-            // エラーが NotAllowedError の場合は、ユーザー操作が必要
-            if (error?.name === 'NotAllowedError') {
-              console.warn('⚠️ ブラウザが自動再生をブロックしています。ユーザーが画面をクリックしてください。');
-            }
-          });
-      } else {
-        // play()がPromiseを返さない古いブラウザの場合
-        this.hasPlayedSound = true;
-        console.log('✅ 音声の再生を開始しました（Promise非対応ブラウザ）');
-      }
-    } catch (error: any) {
-      console.error('❌ 音声再生の例外:', error);
-      console.error('例外詳細:', {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack
-      });
-    }
+
+    this.autoplayAttemptInProgress = false;
+
+    this.playSound().catch((error) => {
+      console.error('ユーザー操作による音声再生に失敗しました:', error);
+    });
   }
 
   ngOnDestroy(): void {
-    // イベントリスナーを削除
+    this.isComponentDestroyed = true;
+
+    // イベントリスナーの解除
     if (this.introContainer?.nativeElement) {
       if (this.domClickHandler) {
         this.introContainer.nativeElement.removeEventListener('click', this.domClickHandler);
@@ -320,8 +432,7 @@ export class IntroAnimationComponent implements OnInit, AfterViewInit, OnDestroy
         this.introContainer.nativeElement.removeEventListener('touchstart', this.domTouchHandler);
       }
     }
-    
-    // セレクターで取得した要素のイベントリスナーも削除
+
     const containerElement = document.querySelector('app-intro-animation div.fixed') as HTMLElement;
     if (containerElement && this.domClickHandler) {
       containerElement.removeEventListener('click', this.domClickHandler);
@@ -330,13 +441,8 @@ export class IntroAnimationComponent implements OnInit, AfterViewInit, OnDestroy
     if (containerElement && this.domTouchHandler) {
       containerElement.removeEventListener('touchstart', this.domTouchHandler);
     }
-    
-    // コンポーネント破棄時に音声リソースをクリーンアップ
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio = undefined;
-    }
+
+    this.teardownAudioElement();
   }
 
   startImageLoop(): void {
