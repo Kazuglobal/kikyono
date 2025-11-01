@@ -35,6 +35,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Import map must come before any module scripts -->
+  <script type="importmap">
+  {
+    "imports": {
+      "rxjs": "https://aistudiocdn.com/rxjs@^7.8.2?conditions=es2015",
+      "rxjs/operators": "https://aistudiocdn.com/rxjs@^7.8.2/operators?conditions=es2015",
+      "rxjs/ajax": "https://aistudiocdn.com/rxjs@^7.8.2/ajax?conditions=es2015",
+      "rxjs/webSocket": "https://aistudiocdn.com/rxjs@^7.8.2/webSocket?conditions=es2015",
+      "rxjs/testing": "https://aistudiocdn.com/rxjs@^7.8.2/testing?conditions=es2015",
+      "rxjs/fetch": "https://aistudiocdn.com/rxjs@^7.8.2/fetch?conditions=es2015",
+      "@angular/core": "https://next.esm.sh/@angular/core@^20.3.9?external=rxjs",
+      "@angular/compiler": "https://next.esm.sh/@angular/compiler@^20.3.9?external=rxjs",
+      "@angular/platform-browser": "https://next.esm.sh/@angular/platform-browser@^20.3.9?external=rxjs",
+      "@angular/forms": "https://next.esm.sh/@angular/forms@^20.3.9?external=rxjs"
+    }
+  }
+  </script>
+
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
@@ -427,25 +446,9 @@
 <link rel="stylesheet" href="/index.css">
 </head>
 <body class="bg-slate-50">
-  
+
   <app-root></app-root>
 
-  <script type="importmap">
-  {
-    "imports": {
-      "rxjs": "https://aistudiocdn.com/rxjs@^7.8.2?conditions=es2015",
-      "rxjs/operators": "https://aistudiocdn.com/rxjs@^7.8.2/operators?conditions=es2015",
-      "rxjs/ajax": "https://aistudiocdn.com/rxjs@^7.8.2/ajax?conditions=es2015",
-      "rxjs/webSocket": "https://aistudiocdn.com/rxjs@^7.8.2/webSocket?conditions=es2015",
-      "rxjs/testing": "https://aistudiocdn.com/rxjs@^7.8.2/testing?conditions=es2015",
-      "rxjs/fetch": "https://aistudiocdn.com/rxjs@^7.8.2/fetch?conditions=es2015",
-      "@angular/core": "https://next.esm.sh/@angular/core@^20.3.9?external=rxjs",
-      "@angular/compiler": "https://next.esm.sh/@angular/compiler@^20.3.9?external=rxjs",
-      "@angular/platform-browser": "https://next.esm.sh/@angular/platform-browser@^20.3.9?external=rxjs",
-      "@angular/forms": "https://next.esm.sh/@angular/forms@^20.3.9?external=rxjs"
-    }
-  }
-  </script>
   <script type="module" src="index.tsx"></script>
 
 </body>
