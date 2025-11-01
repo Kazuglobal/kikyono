@@ -99,7 +99,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Google Apps Script のウェブアプリURL
     // TODO: Google Apps Scriptをデプロイ後、このURLを更新してください
-    const GAS_ENDPOINT = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzRvp_PuGr-AfuL2boqq5sqfbzSXgOCnWHJ6mhLl30kuim-P27ujbd06lLEi0w-1yJlqg/exec';
 
     // フォームデータを準備
     const formData = this.contactForm.value;
