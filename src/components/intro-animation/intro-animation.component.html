@@ -1,6 +1,11 @@
 <div 
-  class="fixed inset-0 bg-black text-white flex items-center justify-center z-[100] transition-opacity duration-500"
-  [class.opacity-0]="!isComponentVisible()">
+  #introContainer
+  class="fixed inset-0 bg-black text-white flex items-center justify-center z-[100] transition-opacity duration-500 cursor-pointer"
+  [class.opacity-0]="!isComponentVisible()"
+  [style.pointer-events]="isComponentVisible() ? 'auto' : 'none'"
+  (click)="onScreenClick($event)"
+  (touchstart)="onScreenClick($event)"
+  (mousedown)="onScreenClick($event)">
 
   <!-- Logo & Text Phase -->
   <div 

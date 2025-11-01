@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(copy \"c:\\Users\\s1598\\Downloads\\野球しようぜ.mp4\" \"assets\\audio\\野球しようぜ.mp4\")",
+      "Bash(npm run build:*)",
+      "Bash(git restore:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
