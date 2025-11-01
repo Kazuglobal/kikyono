@@ -157,13 +157,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       quote: '息子は野球を通じて、仲間を思いやる心や努力することの大切さを学んでいます。コーチの皆様の熱心な指導のおかげで、毎日楽しく成長しています。',
       name: '6年生保護者',
       role: '保護者',
-      avatar: 'https://i.pravatar.cc/150?u=parent_1',
+      avatar: '',
     },
     {
       quote: '最初は不安でしたが、チームの温かい雰囲気と丁寧な指導のおかげで、子供が毎日笑顔で練習に通っています。親子共々、良い仲間に出会えて感謝しています。',
       name: '3年生保護者',
       role: '保護者',
-      avatar: 'https://i.pravatar.cc/150?u=parent_2',
+      avatar: '',
     },
   ]);
 
