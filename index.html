@@ -269,6 +269,35 @@
       animation: letter-reveal 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
     }
 
+    /* Purple Gradient Animation for Hero Title */
+    @keyframes gradient-flow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .gradient-text-purple {
+      background: linear-gradient(
+        90deg,
+        #a78bfa 0%,    /* violet-400 */
+        #8b5cf6 25%,   /* violet-500 */
+        #7c3aed 50%,   /* violet-600 */
+        #6d28d9 75%,   /* violet-700 */
+        #8b5cf6 100%   /* violet-500 */
+      );
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-flow 4s ease infinite;
+    }
+
     /* Enhanced Section Animations */
     @keyframes slide-in-left {
       from {
