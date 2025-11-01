@@ -13,7 +13,6 @@ interface Testimonial {
   quote: string;
   name: string;
   role: string;
-  avatar: string;
 }
 
 interface TeamValue {
@@ -154,16 +153,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   testimonials = signal<Testimonial[]>([
     {
-      quote: '野球は楽しいスポーツだよ！わからなくても大丈夫！監督やコーチが優しく教えてくれるよ！君も未来の大谷をめざせ！',
-      name: '鈴木 怜優',
-      role: 'キャプテン',
-      avatar: 'https://i.pravatar.cc/150?u=captain_reo',
+      quote: '息子が野球を始めてから、毎日が充実しています。監督やコーチの方々が丁寧に指導してくださり、技術だけでなく礼儀やチームワークも学んでいます。',
+      name: '保護者 A',
+      role: '6年生保護者',
     },
     {
-      quote: '練習では監督、コーチが分かりやすく教えてくれます。試合では全員が、楽しく野球をプレーできます。皆さんも桔梗野バイオレッツに入って野球をしてみませんか？',
-      name: '工藤 蓮',
-      role: '副キャプテン',
-      avatar: 'https://i.pravatar.cc/150?u=vicecaptain_ren',
+      quote: '桔梗野バイオレッツは本当にアットホームなチームです。子供たちが伸び伸びと野球を楽しんでいる姿を見ると、入部させて良かったと心から思います。',
+      name: '保護者 B',
+      role: '3年生保護者',
     },
   ]);
 
