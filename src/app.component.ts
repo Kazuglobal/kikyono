@@ -41,14 +41,22 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heroTitleLetters = signal('KIKYONO VIOLETS'.split(''));
   
+  // Hero image paths - optimized for different screen sizes
+  // Using absolute paths that work with Angular dev server
+  heroImagePaths = {
+    mobile: 'assets/images/hero-team-mobile.jpg', // 640px width
+    tablet: 'assets/images/hero-team-desktop.jpg', // 1024px width (using desktop image)
+    desktop: 'assets/images/hero-team-desktop.jpg', // 1920px width
+    fallback: 'assets/images/hero-team.jpg' // Fallback image
+  };
+  
   activeSectionId = signal<string>('');
   private observer?: IntersectionObserver;
 
   onWindowScroll(): void {
-    if (window.innerWidth > 768) { // Parallax for non-mobile
-      const scrollY = window.scrollY;
-      this.heroBgTransform.set(`translateY(${scrollY * 0.3}px)`);
-    }
+    // Disable parallax effect to keep image fully visible
+    // Parallax can cause image to move out of view
+    // this.heroBgTransform.set(`translateY(0)`);
   }
 
   ngOnInit(): void {

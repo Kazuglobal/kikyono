@@ -4,19 +4,19 @@
 
   <!-- Logo & Text Phase -->
   <div 
-    class="relative w-full h-full flex flex-col items-center justify-center text-center p-4 transition-opacity duration-500"
+    class="relative w-full h-full flex flex-col items-center justify-center text-center p-4 sm:p-6 md:p-8 transition-opacity duration-500"
     [class.opacity-100]="animationState() === 'logo'"
     [class.opacity-0]="animationState() !== 'logo'">
     
     <!-- Text container -->
     <div class="animate-logo-fade">
-      <h1 class="font-anton text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider text-violet-400 whitespace-nowrap">KIKYONO VIOLETS</h1>
-      <p class="mt-4 text-2xl md:text-4xl font-bold tracking-widest">野球しようぜ！</p>
+      <h1 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold tracking-wider text-violet-400 whitespace-nowrap px-2">KIKYONO VIOLETS</h1>
+      <p class="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold tracking-widest px-2">野球しようぜ！</p>
     </div>
 
     <!-- Baseball animation -->
     <div class="absolute">
-        <ion-icon name="baseball-outline" class="text-white text-8xl opacity-0 animate-baseball-float"></ion-icon>
+        <ion-icon name="baseball-outline" class="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl opacity-0 animate-baseball-float"></ion-icon>
     </div>
   </div>
 
@@ -32,6 +32,7 @@
            [class.opacity-0]="i !== activeImageIndex()"
            [attr.alt]="'Kikyono Violets team photo ' + (i + 1)"
            priority="true"
+           loading="eager"
            >
     }
   </div>

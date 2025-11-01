@@ -1,24 +1,24 @@
-<footer class="bg-slate-900 text-slate-400 py-12">
-  <div class="container mx-auto px-6 lg:px-8 text-center">
+<footer class="bg-slate-900 text-slate-400 py-8 sm:py-10 md:py-12">
+  <div class="container mx-auto px-4 sm:px-6 md:px-8 text-center">
     
     <!-- Social Share Section -->
     <div>
-      <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-300">Share This Site</h3>
-      <div class="flex justify-center space-x-6 mt-4">
+      <h3 class="text-xs sm:text-sm font-semibold tracking-wider uppercase text-slate-300">Share This Site</h3>
+      <div class="flex justify-center space-x-4 sm:space-x-6 mt-3 sm:mt-4">
         <!-- Twitter -->
         <a [href]="twitterShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"
-           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
-          <ion-icon name="logo-twitter" class="text-3xl"></ion-icon>
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110 active:scale-95">
+          <ion-icon name="logo-twitter" class="text-2xl sm:text-3xl md:text-4xl"></ion-icon>
         </a>
         <!-- Facebook -->
         <a [href]="facebookShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
-           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
-          <ion-icon name="logo-facebook" class="text-3xl"></ion-icon>
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110 active:scale-95">
+          <ion-icon name="logo-facebook" class="text-2xl sm:text-3xl md:text-4xl"></ion-icon>
         </a>
         <!-- LINE -->
         <a [href]="lineShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Line"
-           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
-          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110 active:scale-95">
+          <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21.5,4.9C20.2,3.7,18.6,3,16.8,3c-3,0-5.6,1.9-6.7,4.6H10c-3.6,0-6.6,2.9-6.6,6.6c0,2.1,1,4,2.6,5.3
             c0.2,0.1,0.4,0.2,0.6,0.2c0.2,0,0.5-0.1,0.6-0.2c0.3-0.3,0.3-0.8,0-1.1c-1.3-1.1-2.2-2.7-2.2-4.4c0-3.1,2.5-5.6,5.6-5.6h0.1
             c0.5,0,0.9-0.4,0.9-0.9v-0.1c0.1-2.4,2.1-4.4,4.5-4.4c1.4,0,2.6,0.6,3.5,1.5c1.1,1.1,1.7,2.7,1.7,4.3c0,0.5,0.4,0.9,0.9,0.9
@@ -30,6 +30,6 @@
       </div>
     </div>
     
-    <p class="mt-8 pt-8 border-t border-slate-700/50">&copy; {{ currentYear }} 桔梗野バイオレッツ少年野球チーム. All Rights Reserved.</p>
+    <p class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-700/50 text-xs sm:text-sm md:text-base">&copy; {{ currentYear }} 桔梗野バイオレッツ少年野球チーム. All Rights Reserved.</p>
   </div>
 </footer>

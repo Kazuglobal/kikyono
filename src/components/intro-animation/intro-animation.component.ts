@@ -14,14 +14,11 @@ export class IntroAnimationComponent implements OnInit {
   isComponentVisible = signal(true);
 
   images = signal([
-    'https://picsum.photos/seed/bball1/1920/1080',
-    'https://picsum.photos/seed/bball2/1920/1080',
-    'https://picsum.photos/seed/bball3/1920/1080',
-    'https://picsum.photos/seed/bball4/1920/1080',
-    'https://picsum.photos/seed/bball5/1920/1080',
-    'https://picsum.photos/seed/bball6/1920/1080',
-    'https://picsum.photos/seed/bball7/1920/1080',
-    'https://picsum.photos/seed/bball8/1920/1080',
+    'assets/images/intro-team-1.jpg', // 円陣を組んでいる少年野球チーム
+    'assets/images/intro-team-2.jpg', // トロフィーと賞状を持った集合写真
+    'assets/images/intro-team-3.jpg', // 一列に並んだ少年たち
+    'assets/images/intro-team-4.jpg', // 後ろ姿の整列（黄色い壁の前）
+    'assets/images/intro-team-5.jpg', // 屋外の集合写真（コーチ中心）
   ]);
 
   ngOnInit(): void {
