@@ -51,7 +51,6 @@
       font-family: 'Anton', sans-serif;
     }
     .animate-fade-in-up {
-      opacity: 0;
       animation: fade-in-up 0.5s ease-out forwards;
     }
     .animate-logo-fade {
@@ -60,11 +59,9 @@
 
     @keyframes fade-in-up {
       from {
-        opacity: 0;
         transform: translateY(20px);
       }
       to {
-        opacity: 1;
         transform: translateY(0);
       }
     }
@@ -151,19 +148,14 @@
     /* New Scroll-triggered Animations */
     @keyframes scroll-fade-in-up {
       from {
-        opacity: 0;
         transform: translateY(40px) scale(0.98);
       }
       to {
-        opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
 
     .animate-on-scroll {
-      /* Set initial state for browsers that don't support scroll-driven animations */
-      opacity: 0;
-
       /* The animation */
       animation: scroll-fade-in-up 0.8s ease-out forwards;
       animation-delay: var(--stagger-delay, 0ms);
@@ -193,17 +185,14 @@
     @keyframes title-slide-in {
       from {
         transform: translateY(100%);
-        opacity: 0;
       }
       to {
         transform: translateY(0);
-        opacity: 1;
       }
     }
 
     .animate-title-slide-in {
       display: inline-block;
-      opacity: 0;
       transform: translateY(100%);
       animation: title-slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
       animation-timeline: view(auto);
@@ -215,16 +204,13 @@
     @keyframes count-up-scale {
       from {
         transform: translateY(20px) scale(0.9);
-        opacity: 0;
       }
       to {
         transform: translateY(0) scale(1);
-        opacity: 1;
       }
     }
 
     .animate-count-up {
-      opacity: 0;
       animation: count-up-scale 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
       animation-delay: var(--stagger-delay, 0ms);
       animation-timeline: view(auto);
@@ -253,61 +239,50 @@
     /* Hero Text Reveal Animation */
     @keyframes letter-reveal {
       from {
-        opacity: 0;
         transform: translateY(20px) scale(0.9);
       }
       to {
-        opacity: 1;
         transform: translateY(0) scale(1);
       }
     }
 
     .animate-letter-reveal {
-      opacity: 0; /* Initial state */
       animation: letter-reveal 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
     }
 
     /* Enhanced Section Animations */
     @keyframes slide-in-left {
       from {
-        opacity: 0;
         transform: translateX(-60px) scale(0.95);
       }
       to {
-        opacity: 1;
         transform: translateX(0) scale(1);
       }
     }
 
     @keyframes slide-in-right {
       from {
-        opacity: 0;
         transform: translateX(60px) scale(0.95);
       }
       to {
-        opacity: 1;
         transform: translateX(0) scale(1);
       }
     }
 
     @keyframes zoom-in {
       from {
-        opacity: 0;
         transform: scale(0.8);
       }
       to {
-        opacity: 1;
         transform: scale(1);
       }
     }
 
     @keyframes bounce-in {
       0% {
-        opacity: 0;
         transform: scale(0.3) translateY(-50px);
       }
       50% {
-        opacity: 1;
         transform: scale(1.05);
       }
       70% {
@@ -320,11 +295,9 @@
 
     @keyframes rotate-in {
       from {
-        opacity: 0;
         transform: rotate(-10deg) scale(0.9);
       }
       to {
-        opacity: 1;
         transform: rotate(0) scale(1);
       }
     }
@@ -346,7 +319,6 @@
     }
 
     .animate-slide-left {
-      opacity: 0;
       animation: slide-in-left 0.8s ease-out forwards;
       animation-timeline: view(auto);
       animation-range-start: entry 5%;
@@ -354,7 +326,6 @@
     }
 
     .animate-slide-right {
-      opacity: 0;
       animation: slide-in-right 0.8s ease-out forwards;
       animation-timeline: view(auto);
       animation-range-start: entry 5%;
@@ -362,7 +333,6 @@
     }
 
     .animate-zoom-in {
-      opacity: 0;
       animation: zoom-in 0.8s ease-out forwards;
       animation-timeline: view(auto);
       animation-range-start: entry 5%;
@@ -370,7 +340,6 @@
     }
 
     .animate-bounce-in {
-      opacity: 0;
       animation: bounce-in 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
       animation-timeline: view(auto);
       animation-range-start: entry 10%;
@@ -378,7 +347,6 @@
     }
 
     .animate-rotate-in {
-      opacity: 0;
       animation: rotate-in 0.8s ease-out forwards;
       animation-timeline: view(auto);
       animation-range-start: entry 5%;
