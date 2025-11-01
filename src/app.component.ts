@@ -1,0 +1,175 @@
+import { ChangeDetectionStrategy, Component, signal, OnInit, inject, computed, AfterViewInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { IntroAnimationComponent } from './components/intro-animation/intro-animation.component';
+
+interface Achievement {
+  title: string;
+  result: string;
+}
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+interface TeamValue {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [HeaderComponent, FooterComponent, IntroAnimationComponent, ReactiveFormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  host: {
+    '(window:scroll)': 'onWindowScroll()'
+  }
+})
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  showIntro = signal(true);
+  private fb = inject(FormBuilder);
+  contactForm!: FormGroup;
+  formStatus = signal<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  heroBgTransform = signal('translateY(0)');
+
+  heroTitleLetters = signal('KIKYONO VIOLETS'.split(''));
+  
+  activeSectionId = signal<string>('');
+  private observer?: IntersectionObserver;
+
+  onWindowScroll(): void {
+    if (window.innerWidth > 768) { // Parallax for non-mobile
+      const scrollY = window.scrollY;
+      this.heroBgTransform.set(`translateY(${scrollY * 0.3}px)`);
+    }
+  }
+
+  ngOnInit(): void {
+    this.contactForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      message: ['', [Validators.required, Validators.minLength(10)]],
+    });
+  }
+  
+  ngAfterViewInit(): void {
+    const options = {
+      rootMargin: '0px 0px -70% 0px', // Highlights when section is in upper 30% of viewport
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.activeSectionId.set(entry.target.id);
+        }
+      });
+    }, options);
+
+    const sections = document.querySelectorAll('main section[id]');
+    sections.forEach(section => this.observer!.observe(section));
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+  }
+
+  onSubmit(): void {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+
+    this.formStatus.set('submitting');
+    console.log('Form Submitted:', this.contactForm.value);
+
+    // Simulate API call
+    setTimeout(() => {
+      this.formStatus.set('success');
+      this.contactForm.reset();
+    }, 1500);
+  }
+
+  achievements = signal<Achievement[]>([
+    { title: 'スポ少大会', result: '【県大会出場】' },
+    { title: '県少年大会', result: '【八戸市ベスト８】' },
+    { title: '市川地区親善試合', result: '【優勝】' },
+    { title: '新人戦', result: '【１回戦突破】' },
+    { title: 'Tボールフェスタ', result: '【１位】' },
+  ]);
+
+  weeklySchedule = signal([
+    { title: '平日練習 (火・木・金)', time: '16:00 - 18:00', location: 'グラウンド', note: '冬季期間は体育館で練習します。' },
+    { title: '土日練習 (土・日)', time: '09:00 - 12:00', location: 'グラウンド', note: '練習試合で遠征することもあります。' },
+  ]);
+
+  annualEvents = signal([
+    { month: '1月', event: '体力強化期間' },
+    { month: '2月', event: '体力強化期間' },
+    { month: '3月', event: '体力強化期間' },
+    { month: '4月', event: 'グランド開き' },
+    { month: '5月', event: '学童大会' },
+    { month: '6月', event: 'スポ少大会' },
+    { month: '7月', event: '県少年大会' },
+    { month: '8月', event: '桔梗野祭り参加' },
+    { month: '9月', event: '新人戦' },
+    { month: '10月', event: 'SG杯' },
+    { month: '11月', event: '６年生を送る会' },
+    { month: '12月', event: 'クリスマス会' },
+  ]);
+
+  testimonials = signal<Testimonial[]>([
+    {
+      quote: '野球は楽しいスポーツだよ！わからなくても大丈夫！監督やコーチが優しく教えてくれるよ！君も未来の大谷をめざせ！',
+      name: '鈴木 怜優',
+      role: 'キャプテン',
+      avatar: 'https://i.pravatar.cc/150?u=captain_reo',
+    },
+    {
+      quote: '練習では監督、コーチが分かりやすく教えてくれます。試合では全員が、楽しく野球をプレーできます。皆さんも桔梗野バイオレッツに入って野球をしてみませんか？',
+      name: '工藤 蓮',
+      role: '副キャプテン',
+      avatar: 'https://i.pravatar.cc/150?u=vicecaptain_ren',
+    },
+  ]);
+
+  memberCount = signal([
+    { grade: '6年生', count: 10 },
+    { grade: '5年生', count: 0 },
+    { grade: '4年生', count: 0 },
+    { grade: '3年生', count: 11 },
+    { grade: '2年生', count: 0 },
+    { grade: '1年生', count: 0 },
+  ]);
+
+  totalMembers = computed(() => this.memberCount().reduce((sum, item) => sum + item.count, 0));
+  
+  teamValues = signal<TeamValue[]>([
+    { 
+      icon: 'people-outline', 
+      title: 'チームワーク', 
+      description: '仲間を信じ、助け合い、共に勝利を目指す。一人ひとりの力が合わさることで、チームはもっと強くなる。'
+    },
+    { 
+      icon: 'flame-outline', 
+      title: '挑戦する心', 
+      description: '失敗を恐れず、常に新しいことにチャレンジする勇気を持つ。すべての経験が君を成長させる。'
+    },
+    { 
+      icon: 'heart-outline', 
+      title: '感謝と尊重', 
+      description: '野球ができる環境、支えてくれる家族、指導者、そして仲間たち。すべてに感謝の気持ちを忘れない。'
+    }
+  ]);
+
+  handleAnimationFinish() {
+    this.showIntro.set(false);
+  }
+}

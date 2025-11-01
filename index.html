@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桔梗野バイオレッツ少年野球チーム | 公式サイト</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="青森県八戸市の少年野球チーム「桔梗野バイオレッツ」公式サイト。野球を通じて、最高の仲間と最高の瞬間を体験しませんか？新入部員、体験入部、随時募集中です！">
+  <meta name="keywords" content="少年野球, 桔梗野バイオレッツ, 八戸市, 野球チーム, 小学生, スポーツ少年団">
+  <link rel="canonical" href="https://kikyono-violets.example.com/"> <!-- TODO: Update with the production URL -->
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kikyono-violets.example.com/"> <!-- TODO: Update with the production URL -->
+  <meta property="og:title" content="桔梗野バイオレッツ少年野球チーム | 公式サイト">
+  <meta property="og:description" content="野球を通じて、最高の仲間と最高の瞬間を。青森県八戸市の少年野球チーム「桔梗野バイオレッツ」公式サイトです。">
+  <meta property="og:image" content="https://picsum.photos/seed/og-image/1200/630"> <!-- TODO: Update with a compelling team image -->
+  <meta property="og:site_name" content="桔梗野バイオレッツ少年野球チーム">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://kikyono-violets.example.com/"> <!-- TODO: Update with the production URL -->
+  <meta property="twitter:title" content="桔梗野バイオレッツ少年野球チーム | 公式サイト">
+  <meta property="twitter:description" content="野球を通じて、最高の仲間と最高の瞬間を。青森県八戸市の少年野球チーム「桔梗野バイオレッツ」公式サイトです。">
+  <meta property="twitter:image" content="https://picsum.photos/seed/og-image/1200/630"> <!-- TODO: Update with a compelling team image -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #f8fafc; /* slate-50 */
+      color: #334155; /* slate-700 */
+    }
+    .font-anton {
+      font-family: 'Anton', sans-serif;
+    }
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fade-in-up 0.5s ease-out forwards;
+    }
+    .animate-logo-fade {
+        animation: logo-fade 2.8s ease-in-out forwards;
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes logo-fade {
+      0% { opacity: 0; transform: scale(0.95); }
+      20%, 80% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.05); }
+    }
+
+    @keyframes baseball-float {
+      0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.5) rotate(-90deg);
+      }
+      30% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+        transform: translateY(-100px) scale(1) rotate(360deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.9) rotate(420deg);
+      }
+    }
+
+    .animate-baseball-float {
+      animation: baseball-float 2.2s cubic-bezier(0.3, 0, 0.7, 1) forwards;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes float-up-down {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    #about::before, #about::after, #values::before, #values::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+    }
+
+    #about::before {
+      width: 200px;
+      height: 200px;
+      background-color: rgba(139, 92, 246, 0.1); /* violet-500 with opacity */
+      top: 10%;
+      left: 15%;
+      animation: float-up-down 8s ease-in-out infinite;
+    }
+
+    #about::after {
+      width: 250px;
+      height: 250px;
+      background-color: rgba(251, 191, 36, 0.1); /* amber-400 with opacity */
+      bottom: 5%;
+      right: 10%;
+      animation: float-up-down 12s ease-in-out infinite;
+    }
+
+    #values::before {
+        width: 300px;
+        height: 300px;
+        background: rgba(167, 139, 250, 0.1);
+        top: 50%;
+        left: -100px;
+        transform: translateY(-50%);
+        animation: float-up-down 10s ease-in-out infinite alternate;
+    }
+
+    #values::after {
+        width: 200px;
+        height: 200px;
+        background: rgba(139, 92, 246, 0.1);
+        top: 10%;
+        right: -50px;
+        animation: float-up-down 14s ease-in-out infinite alternate;
+    }
+    
+    /* New Scroll-triggered Animations */
+    @keyframes scroll-fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-on-scroll {
+      /* Set initial state for browsers that don't support scroll-driven animations */
+      opacity: 0;
+
+      /* The animation */
+      animation: scroll-fade-in-up 0.8s ease-out forwards;
+      animation-delay: var(--stagger-delay, 0ms);
+
+      /* Link to scroll timeline */
+      animation-timeline: view(auto);
+      animation-range-start: entry 5%;
+      animation-range-end: cover 30%;
+    }
+    
+    /* Hero background Ken Burns effect */
+    @keyframes ken-burns-bg {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    .animate-ken-burns-bg {
+        animation: ken-burns-bg 20s ease-out forwards;
+    }
+    
+    /* Section Title Animation */
+    .section-title-container {
+      overflow: hidden;
+      padding-bottom: 0.2em;
+    }
+
+    @keyframes title-slide-in {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-title-slide-in {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: title-slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      animation-timeline: view(auto);
+      animation-range-start: entry 10%;
+      animation-range-end: cover 40%;
+    }
+
+    /* Number count-up effect */
+    @keyframes count-up-scale {
+      from {
+        transform: translateY(20px) scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-count-up {
+      opacity: 0;
+      animation: count-up-scale 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: var(--stagger-delay, 0ms);
+      animation-timeline: view(auto);
+      animation-range-start: entry 15%;
+      animation-range-end: cover 40%;
+    }
+
+    /* Enhanced hover for value cards */
+    .value-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .value-card:hover {
+      transform: translateY(-10px) rotate(-1.5deg);
+      box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.15), 0 8px 10px -6px rgba(124, 58, 237, 0.15);
+    }
+
+    /* Enhanced hover for testimonial cards */
+    .testimonial-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover {
+        transform: scale(1.05) rotate(1deg);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Hero Text Reveal Animation */
+    @keyframes letter-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-letter-reveal {
+      opacity: 0; /* Initial state */
+      animation: letter-reveal 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+    }
+  </style>
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsTeam",
+    "name": "桔梗野バイオレッツ少年野球チーム",
+    "alternateName": "Kikyono Violets",
+    "sport": "野球",
+    "url": "https://kikyono-violets.example.com/",
+    "logo": "https://kikyono-violets.example.com/logo.png",
+    "description": "青森県八戸市を拠点に活動する少年野球チーム「桔梗野バイオレッツ」。野球を通じて、礼儀、協調性、そして楽しむ心を育むことを大切にしています。新入部員、随時募集中です。",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "八戸市",
+      "addressRegion": "青森県",
+      "addressCountry": "JP"
+    }
+  }
+  </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50">
+  
+  <app-root></app-root>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "rxjs": "https://aistudiocdn.com/rxjs@^7.8.2?conditions=es2015",
+      "rxjs/operators": "https://aistudiocdn.com/rxjs@^7.8.2/operators?conditions=es2015",
+      "rxjs/ajax": "https://aistudiocdn.com/rxjs@^7.8.2/ajax?conditions=es2015",
+      "rxjs/webSocket": "https://aistudiocdn.com/rxjs@^7.8.2/webSocket?conditions=es2015",
+      "rxjs/testing": "https://aistudiocdn.com/rxjs@^7.8.2/testing?conditions=es2015",
+      "rxjs/fetch": "https://aistudiocdn.com/rxjs@^7.8.2/fetch?conditions=es2015",
+      "@angular/core": "https://next.esm.sh/@angular/core@^20.3.9?external=rxjs",
+      "@angular/compiler": "https://next.esm.sh/@angular/compiler@^20.3.9?external=rxjs",
+      "@angular/platform-browser": "https://next.esm.sh/@angular/platform-browser@^20.3.9?external=rxjs",
+      "@angular/forms": "https://next.esm.sh/@angular/forms@^20.3.9?external=rxjs"
+    }
+  }
+  </script>
+  <script type="module" src="index.tsx"></script>
+
+</body>
+</html>

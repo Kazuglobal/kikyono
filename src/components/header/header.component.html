@@ -1,0 +1,44 @@
+<header class="container mx-auto px-6 lg:px-8 py-4">
+  <div class="flex justify-between items-center">
+    <a href="#home" class="font-bold text-2xl tracking-wide whitespace-nowrap">
+      桔梗野バイオレッツ
+    </a>
+    <nav class="hidden lg:flex items-center space-x-8">
+      @for (link of navLinks; track link.path) {
+        <a [href]="link.path" class="font-bold hover:text-violet-600 transition-colors" [class.text-violet-600]="link.path === '#' + activeSectionId()">{{ link.label }}</a>
+      }
+    </nav>
+    <div class="hidden lg:block">
+       <a href="#contact" class="bg-violet-600 text-white font-bold py-2 px-6 rounded-full hover:bg-violet-700 transition-all transform hover:scale-105">
+        体験申し込み
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <div class="lg:hidden">
+      <button (click)="toggleMobileMenu()" class="focus:outline-none">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          @if (!isMobileMenuOpen()) {
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8"></path>
+          } @else {
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          }
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="lg:hidden mt-4 bg-white text-slate-800 rounded-lg shadow-xl p-6 animate-fade-in-up" style="animation-duration: 0.3s;">
+      <nav class="flex flex-col space-y-6 text-center">
+        @for (link of navLinks; track link.path) {
+          <a [href]="link.path" (click)="closeMobileMenu()" class="font-bold text-lg hover:text-violet-600 transition-colors" [class.text-violet-600]="link.path === '#' + activeSectionId()">{{ link.label }}</a>
+        }
+        <a href="#contact" (click)="closeMobileMenu()" class="mt-4 inline-block bg-amber-400 text-slate-900 font-bold py-3 px-8 rounded-full text-lg uppercase tracking-wider hover:bg-amber-300 transition-transform transform hover:scale-105">
+          無料体験に参加する
+        </a>
+      </nav>
+    </div>
+  }
+</header>

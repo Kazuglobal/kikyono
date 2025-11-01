@@ -1,0 +1,35 @@
+<footer class="bg-slate-900 text-slate-400 py-12">
+  <div class="container mx-auto px-6 lg:px-8 text-center">
+    
+    <!-- Social Share Section -->
+    <div>
+      <h3 class="text-sm font-semibold tracking-wider uppercase text-slate-300">Share This Site</h3>
+      <div class="flex justify-center space-x-6 mt-4">
+        <!-- Twitter -->
+        <a [href]="twitterShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
+          <ion-icon name="logo-twitter" class="text-3xl"></ion-icon>
+        </a>
+        <!-- Facebook -->
+        <a [href]="facebookShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook"
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
+          <ion-icon name="logo-facebook" class="text-3xl"></ion-icon>
+        </a>
+        <!-- LINE -->
+        <a [href]="lineShareUrl()" target="_blank" rel="noopener noreferrer" aria-label="Share on Line"
+           class="text-slate-400 hover:text-white transition-transform transform hover:scale-110">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21.5,4.9C20.2,3.7,18.6,3,16.8,3c-3,0-5.6,1.9-6.7,4.6H10c-3.6,0-6.6,2.9-6.6,6.6c0,2.1,1,4,2.6,5.3
+            c0.2,0.1,0.4,0.2,0.6,0.2c0.2,0,0.5-0.1,0.6-0.2c0.3-0.3,0.3-0.8,0-1.1c-1.3-1.1-2.2-2.7-2.2-4.4c0-3.1,2.5-5.6,5.6-5.6h0.1
+            c0.5,0,0.9-0.4,0.9-0.9v-0.1c0.1-2.4,2.1-4.4,4.5-4.4c1.4,0,2.6,0.6,3.5,1.5c1.1,1.1,1.7,2.7,1.7,4.3c0,0.5,0.4,0.9,0.9,0.9
+            s0.9-0.4,0.9-0.9C22.5,7.9,22.1,6.2,21.5,4.9z M12.5,11.2c-0.5,0-0.9,0.4-0.9,0.9v3.1c0,0.5,0.4,0.9,0.9,0.9s0.9-0.4,0.9-0.9
+            v-3.1C13.4,11.6,13,11.2,12.5,11.2z M8.9,12.1v2.2c0,0.5,0.4,0.9,0.9,0.9s0.9-0.4,0.9-0.9v-2.2c0-0.5-0.4-0.9-0.9-0.9
+            S8.9,11.6,8.9,12.1z M15.2,12.1v2.2c0,0.5,0.4,0.9,0.9,0.9s0.9-0.4,0.9-0.9v-2.2c0-0.5-0.4-0.9-0.9-0.9S15.2,11.6,15.2,12.1z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    
+    <p class="mt-8 pt-8 border-t border-slate-700/50">&copy; {{ currentYear }} 桔梗野バイオレッツ少年野球チーム. All Rights Reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,296 @@
+<!-- Intro Animation -->
+@if (showIntro()) {
+  <app-intro-animation (animationFinished)="handleAnimationFinish()" />
+}
+
+<!-- Main Content: Fades in after intro -->
+<div [class.opacity-0]="showIntro()" [class.pointer-events-none]="showIntro()" class="transition-opacity duration-500">
+  <app-header [activeSectionId]="activeSectionId()" />
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-white text-center overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <!-- Parallax Background Container -->
+        <div class="absolute w-full h-[120vh] top-[-10vh]" [style.transform]="heroBgTransform()">
+          <div class="w-full h-full bg-cover bg-center animate-ken-burns-bg"
+               style="background-image: url('https://picsum.photos/seed/hero/1920/1080');">
+          </div>
+        </div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/60"></div>
+      </div>
+      <div class="relative z-10 px-4">
+        <h1 class="font-anton text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-wider flex flex-wrap justify-center">
+          @for(letter of heroTitleLetters(); track $index) {
+            <span class="inline-block animate-letter-reveal" [style.animation-delay]="$index * 50 + 'ms'">{{ letter }}</span>
+          }
+        </h1>
+        <p class="mt-4 text-2xl md:text-4xl font-bold animate-fade-in-up" style="animation-delay: 700ms;">最高の仲間と、最高の瞬間を。</p>
+        <p class="mt-6 text-xl md:text-2xl font-semibold tracking-widest text-amber-300 animate-fade-in-up" style="animation-delay: 775ms;">【チームワーク・助け合い】</p>
+        <a href="#contact" 
+           class="mt-8 inline-block bg-amber-400 text-slate-900 font-bold py-4 px-10 rounded-full text-lg uppercase tracking-wider hover:bg-amber-300 transition-transform transform hover:scale-105 animate-fade-in-up"
+           style="animation-delay: 850ms;">
+          今すぐ無料体験に参加
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 lg:py-32 bg-white relative overflow-hidden">
+      <div class="container mx-auto px-6 lg:px-8 relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-violet-600 animate-title-slide-in">ABOUT US</h2>
+          </div>
+          <p class="mt-4 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">桔梗野バイオレッツへようこそ！</p>
+          <p class="mt-6 text-base md:text-lg leading-relaxed animate-on-scroll" [style.--stagger-delay]="'200ms'">
+            私たちは、野球を愛する子どもたちのための少年野球チームです。勝利を目指すことはもちろん、野球を通じて礼儀、協調性、そして何よりも「楽しむ心」を育むことを大切にしています。経験豊富な指導者が、一人ひとりのレベルに合わせて丁寧に指導します。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Member Count Section -->
+    <section id="members" class="py-20 lg:py-24 bg-slate-100">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-slate-800 animate-title-slide-in">MEMBER COMPOSITION</h2>
+          </div>
+          <p class="mt-2 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">現在の部員数</p>
+        </div>
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 animate-on-scroll" [style.--stagger-delay]="'150ms'">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 text-center">
+            @for (member of memberCount(); track member.grade; let i = $index) {
+              <div>
+                <p class="text-lg font-semibold text-slate-600">{{ member.grade }}</p>
+                <p class="font-anton text-5xl text-violet-600 animate-count-up" [style.--stagger-delay]="i * 80 + 'ms'">{{ member.count }}<span class="text-2xl text-slate-500 font-sans ml-1">名</span></p>
+              </div>
+            }
+          </div>
+          <div class="mt-8 pt-6 border-t border-slate-200 text-center">
+            <p class="text-xl text-slate-600">合計部員数</p>
+            <p class="font-anton text-6xl text-amber-500 animate-count-up" [style.--stagger-delay]="memberCount().length * 80 + 'ms'">{{ totalMembers() }}<span class="text-3xl text-slate-500 font-sans ml-1">名</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="values" class="py-20 lg:py-32 bg-white relative overflow-hidden">
+      <div class="container mx-auto px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-12">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-slate-800 animate-title-slide-in">OUR VALUES</h2>
+          </div>
+          <p class="mt-2 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">私たちが大切にしていること</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+          @for (value of teamValues(); track value.title; let i = $index) {
+            <div class="text-center p-8 bg-slate-50 rounded-lg shadow-lg value-card animate-on-scroll" [style.--stagger-delay]="i * 150 + 'ms'">
+              <div class="inline-block p-4 bg-violet-100 rounded-full">
+                <ion-icon [name]="value.icon" class="text-4xl text-violet-600"></ion-icon>
+              </div>
+              <h3 class="mt-6 text-xl font-bold text-slate-900">{{ value.title }}</h3>
+              <p class="mt-2 text-slate-600">{{ value.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20 lg:py-32 bg-slate-100">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-violet-600 animate-title-slide-in">ACHIEVEMENTS</h2>
+          </div>
+          <p class="mt-2 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">主な大会実績</p>
+        </div>
+        <div class="max-w-2xl mx-auto">
+          <ul class="space-y-4">
+            @for (achievement of achievements(); track achievement.title; let i = $index) {
+              <li class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between transition-all hover:shadow-lg hover:bg-violet-50 hover:scale-[1.03] transform animate-on-scroll" [style.--stagger-delay]="i * 100 + 'ms'">
+                <span class="text-slate-800 font-semibold text-lg">{{ achievement.title }}</span>
+                <span class="font-bold text-xl text-amber-500 tracking-wider">{{ achievement.result }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-20 lg:py-32 bg-white">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-slate-800 animate-title-slide-in">PRACTICE & EVENTS</h2>
+          </div>
+          <p class="mt-2 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">練習 & 年間行事</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          <div class="animate-on-scroll">
+            <h3 class="text-2xl font-bold text-center mb-6 text-slate-700">通常練習</h3>
+            <div class="space-y-4">
+              @for (item of weeklySchedule(); track item.title) {
+                <div class="bg-slate-50 p-6 rounded-lg shadow-sm">
+                  <p class="font-bold text-lg text-violet-700">{{ item.title }}</p>
+                  <p class="text-slate-600 font-semibold">{{ item.time }}</p>
+                  <p class="text-slate-500 text-sm mt-1">場所: {{ item.location }}</p>
+                  <p class="text-slate-500 text-sm mt-1">{{ item.note }}</p>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="animate-on-scroll" [style.--stagger-delay]="'150ms'">
+            <h3 class="text-2xl font-bold text-center mb-6 text-slate-700">年間予定</h3>
+            <div class="bg-slate-50 p-6 rounded-lg shadow-sm">
+                <ul class="space-y-3">
+                @for (event of annualEvents(); track event.month; let i = $index) {
+                    <li class="flex items-center border-b border-slate-200 last:border-b-0 py-2 animate-on-scroll" [style.--stagger-delay]="i * 50 + 'ms'">
+                    <span class="font-anton text-2xl text-amber-500 w-16">{{ event.month }}</span>
+                    <span class="text-slate-700 font-semibold">{{ event.event }}</span>
+                    </li>
+                }
+                </ul>
+            </div>
+            <p class="text-center text-sm text-slate-500 mt-4">※予定は変更になる場合があります。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 lg:py-32 bg-violet-600 text-white">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl animate-title-slide-in">MEMBER'S VOICE</h2>
+          </div>
+          <p class="mt-2 text-lg text-violet-200 animate-on-scroll" [style.--stagger-delay]="'100ms'">キャプテン・副キャプテンの声</p>
+        </div>
+        <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          @for (testimonial of testimonials(); track testimonial.name; let i = $index) {
+            <div class="bg-violet-700/50 p-8 rounded-lg shadow-xl flex flex-col testimonial-card animate-on-scroll" [style.--stagger-delay]="i * 150 + 'ms'">
+              <p class="text-violet-100 flex-grow text-lg leading-relaxed">"{{ testimonial.quote }}"</p>
+              <div class="mt-6 flex items-center">
+                <img class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-violet-400" [src]="testimonial.avatar" [alt]="testimonial.name">
+                <div>
+                  <p class="font-bold text-white text-xl">{{ testimonial.name }}</p>
+                  <p class="text-violet-300 font-semibold">{{ testimonial.role }}</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+     <!-- Join Us Section -->
+    <section id="join" class="py-20 lg:py-24 bg-amber-400">
+        <div class="container mx-auto px-6 lg:px-8 text-center">
+            <div>
+                <div class="section-title-container">
+                    <h2 class="font-anton text-4xl md:text-5xl text-slate-900 animate-title-slide-in">新入部員 大歓迎！</h2>
+                </div>
+                <p class="mt-6 text-xl text-slate-800 font-semibold animate-on-scroll" [style.--stagger-delay]="'100ms'">
+                    野球に興味がある子、集まれ！体験入部はいつでもOK！
+                </p>
+                <div class="mt-8 max-w-2xl mx-auto bg-white/50 rounded-lg p-6 space-y-3 text-slate-700 font-medium animate-on-scroll" [style.--stagger-delay]="'200ms'">
+                    <p>※ 体験入部する人はお父さんかお母さんと一緒にきてね！</p>
+                    <p class="font-bold text-lg">火・木・金・土・日、コーチはだいたいいます！</p>
+                </div>
+                <a href="#contact" class="mt-10 inline-block bg-violet-600 text-white font-bold py-4 px-10 rounded-full text-lg uppercase tracking-wider hover:bg-violet-700 transition-transform transform hover:scale-105 animate-on-scroll" [style.--stagger-delay]="'300ms'">
+                    お問い合わせはこちら
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 lg:py-32 bg-white">
+      <div class="container mx-auto px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center">
+          <div class="section-title-container">
+            <h2 class="font-anton text-4xl md:text-5xl text-violet-600 animate-title-slide-in">JOIN US & CONTACT</h2>
+          </div>
+          <p class="mt-4 text-lg text-slate-600 animate-on-scroll" [style.--stagger-delay]="'100ms'">
+            野球をやってみたい、見学してみたい、どんなことでもお気軽にお問い合わせください！<br>
+            私たちと一緒に、最高の思い出を作りましょう！
+          </p>
+        </div>
+
+        <div class="mt-12 max-w-2xl mx-auto animate-on-scroll" [style.--stagger-delay]="'150ms'">
+          @switch (formStatus()) {
+            @case ('success') {
+              <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-6 rounded-lg shadow-md text-center" role="alert">
+                <p class="font-bold text-xl mb-2">送信完了！</p>
+                <p>お問い合わせいただきありがとうございます。担当者より折り返しご連絡いたしますので、今しばらくお待ちください。</p>
+              </div>
+            }
+            @case ('error') {
+              <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg shadow-md text-center" role="alert">
+                <p class="font-bold">送信に失敗しました。</p>
+                <p>申し訳ありませんが、もう一度お試しいただくか、時間をおいて再度お試しください。</p>
+              </div>
+            }
+            @default {
+              <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-slate-700">お名前 <span class="text-red-500">*</span></label>
+                  <input type="text" id="name" formControlName="name" class="mt-1 block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500" [class.border-red-500]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                  @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+                    <p class="mt-1 text-sm text-red-600">お名前は必須です。</p>
+                  }
+                </div>
+                 <div>
+                  <label for="email" class="block text-sm font-medium text-slate-700">メールアドレス <span class="text-red-500">*</span></label>
+                  <input type="email" id="email" formControlName="email" class="mt-1 block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500" [class.border-red-500]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                  @if (contactForm.get('email')?.touched && contactForm.get('email')?.hasError('required')) {
+                    <p class="mt-1 text-sm text-red-600">メールアドレスは必須です。</p>
+                  }
+                  @if (contactForm.get('email')?.touched && contactForm.get('email')?.hasError('email')) {
+                    <p class="mt-1 text-sm text-red-600">有効なメールアドレスを入力してください。</p>
+                  }
+                </div>
+                 <div>
+                  <label for="subject" class="block text-sm font-medium text-slate-700">件名 <span class="text-red-500">*</span></label>
+                  <input type="text" id="subject" formControlName="subject" class="mt-1 block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500" [class.border-red-500]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
+                   @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
+                    <p class="mt-1 text-sm text-red-600">件名は必須です。</p>
+                  }
+                </div>
+                <div>
+                  <label for="message" class="block text-sm font-medium text-slate-700">メッセージ <span class="text-red-500">*</span></label>
+                  <textarea id="message" formControlName="message" rows="5" class="mt-1 block w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500" [class.border-red-500]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
+                  @if (contactForm.get('message')?.touched && contactForm.get('message')?.hasError('required')) {
+                    <p class="mt-1 text-sm text-red-600">メッセージは必須です。</p>
+                  }
+                   @if (contactForm.get('message')?.touched && contactForm.get('message')?.hasError('minlength')) {
+                    <p class="mt-1 text-sm text-red-600">メッセージは10文字以上で入力してください。</p>
+                  }
+                </div>
+                <div>
+                  <button type="submit" 
+                          [disabled]="contactForm.invalid || formStatus() === 'submitting'"
+                          class="w-full flex justify-center py-4 px-8 border border-transparent rounded-full shadow-sm text-lg font-bold text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all transform hover:scale-105">
+                    @if (formStatus() === 'submitting') {
+                      <span>送信中...</span>
+                    } @else {
+                      <span>送信する</span>
+                    }
+                  </button>
+                </div>
+              </form>
+            }
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <app-footer />
+</div>

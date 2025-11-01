@@ -1,0 +1,38 @@
+<div 
+  class="fixed inset-0 bg-black text-white flex items-center justify-center z-[100] transition-opacity duration-500"
+  [class.opacity-0]="!isComponentVisible()">
+
+  <!-- Logo & Text Phase -->
+  <div 
+    class="relative w-full h-full flex flex-col items-center justify-center text-center p-4 transition-opacity duration-500"
+    [class.opacity-100]="animationState() === 'logo'"
+    [class.opacity-0]="animationState() !== 'logo'">
+    
+    <!-- Text container -->
+    <div class="animate-logo-fade">
+      <h1 class="font-anton text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider text-violet-400 whitespace-nowrap">KIKYONO VIOLETS</h1>
+      <p class="mt-4 text-2xl md:text-4xl font-bold tracking-widest">野球しようぜ！</p>
+    </div>
+
+    <!-- Baseball animation -->
+    <div class="absolute">
+        <ion-icon name="baseball-outline" class="text-white text-8xl opacity-0 animate-baseball-float"></ion-icon>
+    </div>
+  </div>
+
+  <!-- Images Phase -->
+  <div 
+    class="absolute inset-0 transition-opacity duration-300"
+    [class.opacity-100]="animationState() === 'images'"
+    [class.opacity-0]="animationState() !== 'images'">
+    @for(image of images(); track image; let i = $index) {
+      <img [src]="image" 
+           class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out"
+           [class.opacity-100]="i === activeImageIndex()"
+           [class.opacity-0]="i !== activeImageIndex()"
+           [attr.alt]="'Kikyono Violets team photo ' + (i + 1)"
+           priority="true"
+           >
+    }
+  </div>
+</div>
