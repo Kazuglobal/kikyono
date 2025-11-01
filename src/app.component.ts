@@ -154,16 +154,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   testimonials = signal<Testimonial[]>([
     {
-      quote: '野球は楽しいスポーツだよ！わからなくても大丈夫！監督やコーチが優しく教えてくれるよ！君も未来の大谷をめざせ！',
-      name: '鈴木 怜優',
-      role: 'キャプテン',
-      avatar: 'https://i.pravatar.cc/150?u=captain_reo',
+      quote: '息子は野球を通じて、仲間を思いやる心や努力することの大切さを学んでいます。コーチの皆様の熱心な指導のおかげで、毎日楽しく成長しています。',
+      name: '佐藤 美咲',
+      role: '保護者',
+      avatar: 'https://i.pravatar.cc/150?u=parent_misaki',
     },
     {
-      quote: '練習では監督、コーチが分かりやすく教えてくれます。試合では全員が、楽しく野球をプレーできます。皆さんも桔梗野バイオレッツに入って野球をしてみませんか？',
-      name: '工藤 蓮',
-      role: '副キャプテン',
-      avatar: 'https://i.pravatar.cc/150?u=vicecaptain_ren',
+      quote: '最初は不安でしたが、チームの温かい雰囲気と丁寧な指導のおかげで、子供が毎日笑顔で練習に通っています。親子共々、良い仲間に出会えて感謝しています。',
+      name: '田中 健太',
+      role: '保護者',
+      avatar: 'https://i.pravatar.cc/150?u=parent_kenta',
     },
   ]);
 
