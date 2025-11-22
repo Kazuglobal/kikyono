@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   heroBgTransform = signal('translateY(0)');
 
   heroTitleLetters = signal('KIKYONO VIOLETS'.split(''));
-  
+
   // Hero image paths - optimized for different screen sizes
   // Using absolute paths that work with Angular dev server
   heroImagePaths = {
@@ -49,14 +49,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     desktop: 'assets/images/hero-team-desktop.jpg', // 1920px width
     fallback: 'assets/images/hero-team.jpg' // Fallback image
   };
-  
+
   activeSectionId = signal<string>('');
   private observer?: IntersectionObserver;
 
   onWindowScroll(): void {
-    // Disable parallax effect to keep image fully visible
-    // Parallax can cause image to move out of view
-    // this.heroBgTransform.set(`translateY(0)`);
+    const scrollPosition = window.scrollY;
+    // Parallax effect for hero background
+    // Moving at half speed of scroll
+    this.heroBgTransform.set(`translateY(${scrollPosition * 0.5}px)`);
   }
 
   ngOnInit(): void {
@@ -67,22 +68,31 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       message: ['', [Validators.required, Validators.minLength(10)]],
     });
   }
-  
+
   ngAfterViewInit(): void {
     const options = {
-      rootMargin: '0px 0px -70% 0px', // Highlights when section is in upper 30% of viewport
+      root: null, // viewport
+      rootMargin: '0px',
+      threshold: 0.15 // Trigger when 15% of the element is visible
     };
 
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.activeSectionId.set(entry.target.id);
+
+          // Add 'in-view' class to trigger animations
+          entry.target.classList.add('in-view');
         }
       });
     }, options);
 
     const sections = document.querySelectorAll('main section[id]');
     sections.forEach(section => this.observer!.observe(section));
+
+    // Also observe specific elements that need animation if they are not sections
+    const animatedElements = document.querySelectorAll('.animate-on-scroll-fallback');
+    animatedElements.forEach(el => this.observer!.observe(el));
   }
 
   ngOnDestroy(): void {
@@ -113,15 +123,15 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       body: JSON.stringify(formData)
     })
-    .then(() => {
-      // no-corsモードでは詳細なレスポンスが取得できないため、成功と見なす
-      this.formStatus.set('success');
-      this.contactForm.reset();
-    })
-    .catch((error) => {
-      console.error('送信エラー:', error);
-      this.formStatus.set('error');
-    });
+      .then(() => {
+        // no-corsモードでは詳細なレスポンスが取得できないため、成功と見なす
+        this.formStatus.set('success');
+        this.contactForm.reset();
+      })
+      .catch((error) => {
+        console.error('送信エラー:', error);
+        this.formStatus.set('error');
+      });
   }
 
   achievements = signal<Achievement[]>([
@@ -177,21 +187,21 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   totalMembers = computed(() => this.memberCount().reduce((sum, item) => sum + item.count, 0));
-  
+
   teamValues = signal<TeamValue[]>([
-    { 
-      icon: 'people-outline', 
-      title: 'チームワーク', 
+    {
+      icon: 'people-outline',
+      title: 'チームワーク',
       description: '仲間を信じ、助け合い、共に勝利を目指す。一人ひとりの力が合わさることで、チームはもっと強くなる。'
     },
-    { 
-      icon: 'flame-outline', 
-      title: '挑戦する心', 
+    {
+      icon: 'flame-outline',
+      title: '挑戦する心',
       description: '失敗を恐れず、常に新しいことにチャレンジする勇気を持つ。すべての経験が君を成長させる。'
     },
-    { 
-      icon: 'heart-outline', 
-      title: '感謝と尊重', 
+    {
+      icon: 'heart-outline',
+      title: '感謝と尊重',
       description: '野球ができる環境、支えてくれる家族、指導者、そして仲間たち。すべてに感謝の気持ちを忘れない。'
     }
   ]);
