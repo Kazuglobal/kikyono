@@ -178,9 +178,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   memberCount = signal([
-    { grade: '6年生', count: 10 },
+    { grade: '6年生', count: 0 },
     { grade: '5年生', count: 0 },
-    { grade: '4年生', count: 0 },
+    { grade: '4年生', count: 11 },
     { grade: '3年生', count: 11 },
     { grade: '2年生', count: 0 },
     { grade: '1年生', count: 0 },
