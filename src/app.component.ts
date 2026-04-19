@@ -115,11 +115,12 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     const formData = this.contactForm.value;
 
     // Google Apps Script にPOSTリクエスト送信
+    // no-corsモードではapplication/jsonはCORSセーフリスト外のため、text/plainを使用
     fetch(GAS_ENDPOINT, {
       method: 'POST',
-      mode: 'no-cors', // Google Apps Script用
+      mode: 'no-cors',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       },
       body: JSON.stringify(formData)
     })
