@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 570" role="img" aria-label="桔梗野バイオレッツのヒーロービジュアル">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fd2f3"/>
+      <stop offset="0.56" stop-color="#d9effc"/>
+      <stop offset="0.57" stop-color="#78a95c"/>
+      <stop offset="0.73" stop-color="#4f7f3e"/>
+      <stop offset="0.74" stop-color="#b87947"/>
+      <stop offset="1" stop-color="#9f6238"/>
+    </linearGradient>
+    <radialGradient id="ballLight" cx="35%" cy="27%" r="72%">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="0.48" stop-color="#e6ddcc"/>
+      <stop offset="1" stop-color="#b99f82"/>
+    </radialGradient>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="ballShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="22" stdDeviation="18" flood-color="#251247" flood-opacity=".28"/>
+    </filter>
+    <pattern id="grain" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M0 8 8 0" stroke="#251247" stroke-opacity=".05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1536" height="570" fill="url(#sky)"/>
+  <rect width="1536" height="570" fill="url(#grain)"/>
+
+  <g opacity=".85" filter="url(#softBlur)">
+    <ellipse cx="205" cy="119" rx="100" ry="34" fill="#fff"/>
+    <ellipse cx="294" cy="109" rx="122" ry="42" fill="#fff"/>
+    <ellipse cx="420" cy="120" rx="116" ry="38" fill="#fff"/>
+    <ellipse cx="720" cy="112" rx="130" ry="42" fill="#fff"/>
+    <ellipse cx="852" cy="126" rx="110" ry="36" fill="#fff"/>
+  </g>
+
+  <g opacity=".34">
+    <rect x="250" y="98" width="9" height="158" fill="#3a4051"/>
+    <rect x="226" y="96" width="57" height="9" rx="4" fill="#3a4051"/>
+    <rect x="1048" y="78" width="9" height="185" fill="#3a4051"/>
+    <rect x="1020" y="76" width="66" height="9" rx="4" fill="#3a4051"/>
+  </g>
+
+  <g opacity=".34">
+    <path d="M0 280 C210 240 330 247 520 270 C700 292 830 272 1000 242 C1190 209 1360 215 1536 250 L1536 332 L0 332 Z" fill="#315f30"/>
+    <path d="M0 332 L1536 332" stroke="#eef7e9" stroke-width="5" opacity=".72"/>
+  </g>
+
+  <g opacity=".92">
+    <path d="M-80 520 C280 420 560 402 842 386 C1040 374 1248 362 1620 328" fill="none" stroke="#f6f0e6" stroke-width="8"/>
+    <path d="M-60 412 C238 392 508 392 778 410 C1058 430 1278 424 1588 382" fill="none" stroke="#f6f0e6" stroke-width="7"/>
+    <path d="M260 570 C515 466 755 424 1040 394" fill="none" stroke="#f8f2e7" stroke-width="8"/>
+    <path d="M730 570 C620 492 540 434 440 372" fill="none" stroke="#f8f2e7" stroke-width="7"/>
+  </g>
+
+  <g opacity=".18">
+    <path d="M0 390 H1536" stroke="#5e351c" stroke-width="2"/>
+    <path d="M0 420 H1536" stroke="#5e351c" stroke-width="2"/>
+    <path d="M0 454 H1536" stroke="#5e351c" stroke-width="2"/>
+    <path d="M0 490 H1536" stroke="#5e351c" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(936 -20) skewX(-12)">
+    <path d="M114 0 H690 L485 570 H-12 Z" fill="#fff" opacity=".93"/>
+    <path d="M245 86 C396 44 516 16 668 24" fill="none" stroke="#251247" stroke-width="18" opacity=".9"/>
+    <path d="M170 520 C350 432 498 358 710 300" fill="none" stroke="#251247" stroke-width="65" opacity=".92"/>
+    <path d="M116 548 C322 454 520 352 744 264" fill="none" stroke="#6b2e9d" stroke-width="28" opacity=".78"/>
+    <path d="M168 0 C250 44 358 54 500 40" fill="none" stroke="#251247" stroke-width="5" stroke-dasharray="7 16" opacity=".85"/>
+  </g>
+
+  <g opacity=".85">
+    <path d="M1210 52 C1288 30 1388 15 1515 5" stroke="#251247" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 22"/>
+    <path d="M1184 104 C1276 72 1390 52 1536 40" stroke="#251247" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 18"/>
+    <path d="M1212 128 C1308 98 1404 83 1536 78" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 15"/>
+  </g>
+
+  <g filter="url(#ballShadow)" transform="translate(1122 105)">
+    <circle cx="160" cy="160" r="148" fill="url(#ballLight)"/>
+    <circle cx="160" cy="160" r="148" fill="none" stroke="#72593f" stroke-opacity=".18" stroke-width="2"/>
+    <g opacity=".14">
+      <circle cx="160" cy="160" r="18" fill="none" stroke="#7b6043"/>
+      <circle cx="160" cy="160" r="42" fill="none" stroke="#7b6043"/>
+      <circle cx="160" cy="160" r="66" fill="none" stroke="#7b6043"/>
+      <circle cx="160" cy="160" r="92" fill="none" stroke="#7b6043"/>
+      <circle cx="160" cy="160" r="118" fill="none" stroke="#7b6043"/>
+    </g>
+    <path d="M84 42 C35 126 38 205 92 282" fill="none" stroke="#9c3035" stroke-width="8" stroke-dasharray="16 12" opacity=".78"/>
+    <path d="M236 42 C285 126 282 205 228 282" fill="none" stroke="#9c3035" stroke-width="8" stroke-dasharray="16 12" opacity=".78"/>
+    <text x="160" y="195" text-anchor="middle" font-family="Arial Black, Yu Gothic, sans-serif" font-size="105" fill="#5a2d91" opacity=".78" stroke="#5a2d91" stroke-width="5">V</text>
+  </g>
+
+  <path d="M0 552 C260 570 500 566 725 548 C1015 524 1255 520 1536 494 L1536 570 L0 570 Z" fill="#251247"/>
+  <path d="M0 544 C342 566 572 558 830 536 C1095 514 1290 510 1536 482" fill="none" stroke="#b7d80d" stroke-width="6"/>
+</svg>
