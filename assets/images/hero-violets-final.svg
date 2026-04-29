@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1247 374" role="img" aria-label="走れ、打て、笑え。桔梗野バイオレッツのヒーロー画像">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ccff1"/>
+      <stop offset="0.44" stop-color="#d7edf8"/>
+      <stop offset="0.45" stop-color="#568a43"/>
+      <stop offset="0.62" stop-color="#89b36a"/>
+      <stop offset="0.63" stop-color="#b87a49"/>
+      <stop offset="1" stop-color="#8f5734"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="33%" cy="25%" r="78%">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset="0.42" stop-color="#e8dcc9"/>
+      <stop offset="1" stop-color="#a98d71"/>
+    </radialGradient>
+    <filter id="blurCloud"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#251247" flood-opacity=".32"/>
+    </filter>
+    <filter id="typeShadow">
+      <feDropShadow dx="4" dy="5" stdDeviation="0" flood-color="#ffffff" flood-opacity=".88"/>
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#251247" flood-opacity=".20"/>
+    </filter>
+    <pattern id="dirt" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M0 14 C4 12 8 15 12 11 C14 9 16 10 18 8" stroke="#6e3d22" stroke-opacity=".24" stroke-width="1" fill="none"/>
+      <circle cx="5" cy="5" r="1.1" fill="#5d311a" opacity=".22"/>
+      <circle cx="13" cy="15" r=".8" fill="#f4dfc8" opacity=".35"/>
+    </pattern>
+    <pattern id="grain" width="7" height="7" patternUnits="userSpaceOnUse">
+      <path d="M0 7 7 0" stroke="#251247" stroke-opacity=".04" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1247" height="374" fill="url(#sky)"/>
+  <rect y="230" width="1247" height="144" fill="url(#dirt)" opacity=".9"/>
+  <rect width="1247" height="374" fill="url(#grain)"/>
+
+  <g filter="url(#blurCloud)" opacity=".92">
+    <ellipse cx="180" cy="54" rx="78" ry="27" fill="#fff"/>
+    <ellipse cx="254" cy="49" rx="92" ry="32" fill="#fff"/>
+    <ellipse cx="351" cy="60" rx="84" ry="28" fill="#fff"/>
+    <ellipse cx="670" cy="56" rx="104" ry="31" fill="#fff"/>
+    <ellipse cx="764" cy="62" rx="82" ry="26" fill="#fff"/>
+  </g>
+
+  <g opacity=".38">
+    <rect x="167" y="28" width="7" height="114" fill="#3d4250"/>
+    <rect x="146" y="26" width="50" height="7" rx="3" fill="#3d4250"/>
+    <rect x="780" y="24" width="7" height="130" fill="#3d4250"/>
+    <rect x="757" y="22" width="54" height="7" rx="3" fill="#3d4250"/>
+  </g>
+
+  <g opacity=".5">
+    <path d="M0 190 C152 154 286 160 450 183 C626 207 728 188 876 161 C1014 136 1136 142 1247 165 L1247 224 L0 224 Z" fill="#315b31"/>
+    <path d="M0 224 H1247" stroke="#f0f7e8" stroke-width="4" opacity=".8"/>
+  </g>
+
+  <g opacity=".9">
+    <path d="M-55 357 C220 294 460 276 710 263 C895 253 1066 244 1300 211" fill="none" stroke="#f8efe5" stroke-width="7"/>
+    <path d="M-52 270 C200 252 426 253 663 267 C890 282 1066 278 1280 246" fill="none" stroke="#f8efe5" stroke-width="6"/>
+    <path d="M240 374 C410 320 586 288 805 269" fill="none" stroke="#fff8ed" stroke-width="7"/>
+    <path d="M575 374 C470 320 400 282 315 239" fill="none" stroke="#fff8ed" stroke-width="6"/>
+  </g>
+
+  <g transform="translate(858 -28) skewX(-13)">
+    <path d="M108 0 H555 L380 402 H-24 Z" fill="#fff" opacity=".95"/>
+    <path d="M176 397 C322 308 460 246 610 202" fill="none" stroke="#251247" stroke-width="66" opacity=".96"/>
+    <path d="M139 392 C288 305 450 224 620 174" fill="none" stroke="#65269a" stroke-width="25" opacity=".78"/>
+    <path d="M174 34 C252 58 340 54 438 38" fill="none" stroke="#251247" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 18" opacity=".9"/>
+    <path d="M170 71 C284 50 385 34 520 26" fill="none" stroke="#251247" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 21" opacity=".78"/>
+  </g>
+
+  <g opacity=".9">
+    <path d="M1056 18 C1120 2 1182 -3 1246 -2" stroke="#251247" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 15"/>
+    <path d="M1018 58 C1088 34 1164 19 1248 14" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 14"/>
+  </g>
+
+  <g filter="url(#shadow)" transform="translate(893 45)">
+    <circle cx="154" cy="154" r="143" fill="url(#ball)"/>
+    <circle cx="154" cy="154" r="143" fill="none" stroke="#6d5137" stroke-opacity=".22" stroke-width="2"/>
+    <g opacity=".14">
+      <circle cx="154" cy="154" r="23" fill="none" stroke="#6f5439"/>
+      <circle cx="154" cy="154" r="45" fill="none" stroke="#6f5439"/>
+      <circle cx="154" cy="154" r="68" fill="none" stroke="#6f5439"/>
+      <circle cx="154" cy="154" r="92" fill="none" stroke="#6f5439"/>
+      <circle cx="154" cy="154" r="117" fill="none" stroke="#6f5439"/>
+    </g>
+    <path d="M78 35 C27 117 32 193 86 274" fill="none" stroke="#9b3035" stroke-width="8" stroke-dasharray="15 11" opacity=".82"/>
+    <path d="M230 35 C281 117 276 193 222 274" fill="none" stroke="#9b3035" stroke-width="8" stroke-dasharray="15 11" opacity=".82"/>
+    <text x="154" y="192" text-anchor="middle" font-family="Arial Black, Yu Gothic, sans-serif" font-size="105" fill="#5a2d91" opacity=".78" stroke="#5a2d91" stroke-width="5">V</text>
+  </g>
+
+  <g filter="url(#typeShadow)" font-family="Arial Black, Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif" font-weight="900" transform="rotate(-3 360 125) skewX(-4)">
+    <text x="68" y="151" font-size="86" fill="#251247" stroke="#251247" stroke-width="1.4">走れ、打て、</text>
+    <text x="570" y="151" font-size="86" fill="#86ac00" stroke="#86ac00" stroke-width="1.4">笑え。</text>
+  </g>
+
+  <text x="84" y="215" font-family="Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif" font-size="25" font-weight="900" fill="#251247" stroke="#fff" stroke-width="1.5" paint-order="stroke">桔梗野バイオレッツで野球の楽しさを仲間と育てよう</text>
+
+  <g transform="translate(80 248)">
+    <rect width="284" height="64" rx="14" fill="#5a2d91" stroke="#3c166c" stroke-width="2"/>
+    <circle cx="48" cy="32" r="19" fill="none" stroke="#fff" stroke-width="2"/>
+    <path d="M42 17 C32 27 34 43 45 49M54 17 C64 27 62 43 51 49" fill="none" stroke="#fff" stroke-width="2"/>
+    <text x="94" y="40" fill="#fff" font-family="Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif" font-size="20" font-weight="900">体験入団する</text>
+    <text x="246" y="42" fill="#fff" font-family="Arial, sans-serif" font-size="35">›</text>
+  </g>
+
+  <g transform="translate(398 248)">
+    <rect width="250" height="64" rx="14" fill="#fff" stroke="#3c166c" stroke-width="2"/>
+    <path d="M45 27 C57 21 70 25 78 35" fill="none" stroke="#251247" stroke-width="4" stroke-linecap="round"/>
+    <path d="M52 27 L47 38 H77 L72 29" fill="#251247"/>
+    <text x="88" y="40" fill="#251247" font-family="Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif" font-size="20" font-weight="900">活動を見る</text>
+    <text x="214" y="42" fill="#251247" font-family="Arial, sans-serif" font-size="35">›</text>
+  </g>
+
+  <path d="M0 360 C230 376 455 375 655 356 C875 334 1044 330 1247 304 L1247 374 L0 374 Z" fill="#251247"/>
+  <path d="M0 353 C278 373 475 370 700 350 C910 331 1062 326 1247 298" fill="none" stroke="#b6d600" stroke-width="5"/>
+</svg>

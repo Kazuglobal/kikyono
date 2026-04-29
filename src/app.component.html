@@ -1,360 +1,212 @@
-<!-- Intro Animation -->
 @if (showIntro()) {
 <app-intro-animation (animationFinished)="handleAnimationFinish()" />
 }
 
-<!-- Main Content: Fades in after intro -->
-<div [class.opacity-0]="showIntro()" [class.pointer-events-none]="showIntro()" class="transition-opacity duration-500">
+<audio #teamAudio src="/assets/sounds/yakyu-shoyouze.mp3" preload="auto"></audio>
+
+@if (showPlayerIntro()) {
+<section
+  class="player-showcase"
+  [class.player-showcase--closing]="playerIntroClosing()"
+  aria-label="桔梗野バイオレッツ選手紹介"
+>
+  <div class="player-showcase__field" aria-hidden="true"></div>
+  <div class="player-showcase__copy">
+    <p>KIKYONO VIOLETS</p>
+    <h2>PLAYER<br>SHOWCASE</h2>
+    <strong>全力で、前へ。</strong>
+  </div>
+  <div class="player-showcase__number" aria-hidden="true">
+    {{ currentPlayerIndex() + 1 < 10 ? '0' + (currentPlayerIndex() + 1) : currentPlayerIndex() + 1 }}
+  </div>
+
+  @for (player of playerIntroPlayers; track player.src; let i = $index) {
+    @if (i === currentPlayerIndex()) {
+    <figure
+      class="player-showcase__player"
+      [class.player-showcase__player--right]="i % 2 === 1"
+    >
+      <img [src]="player.src" [alt]="player.alt" />
+      <figcaption>
+        <span>{{ player.position }}</span>
+        <strong>VIOLETS</strong>
+      </figcaption>
+    </figure>
+    }
+  }
+
+  <ol class="player-showcase__progress" aria-label="紹介の進行状況">
+    @for (player of playerIntroPlayers; track player.src; let i = $index) {
+    <li [class.is-active]="i === currentPlayerIndex()"></li>
+    }
+  </ol>
+  <button class="player-showcase__skip" type="button" (click)="finishPlayerIntro()">スキップ</button>
+</section>
+}
+
+@if (audioBlocked()) {
+<button class="audio-retry" type="button" (click)="playTeamAudio()">音声を再生</button>
+}
+
+<div class="page-stage" [class.page-stage--hidden]="!pageReady()">
   <app-header [activeSectionId]="activeSectionId()" />
 
-  <main>
-    <!-- Hero Section -->
-    <section id="home"
-      class="relative flex flex-col items-center justify-start text-white text-center overflow-hidden bg-slate-900 pt-14 sm:pt-20 md:pt-24">
-      <!-- Hero Image Section -->
-      <div
-        class="relative w-full flex items-center justify-center pt-0 sm:pt-8 md:pt-12 lg:pt-16 pb-0 sm:pb-4 md:pb-6 lg:pb-8">
-        <div class="relative w-full h-auto flex items-center justify-center px-0 sm:px-4 md:px-6 bg-slate-900">
-          <!-- Responsive Background Image using picture element - Mobile First, full image visible -->
-          <picture class="relative w-full h-auto sm:h-full flex items-center justify-center">
-            <!-- Mobile: up to 640px -->
-            <source media="(max-width: 640px)" [srcset]="heroImagePaths.mobile" type="image/jpeg">
-            <!-- Tablet: 641px to 1024px (uses desktop image if tablet version not available) -->
-            <source media="(max-width: 1024px) and (min-width: 641px)" [srcset]="heroImagePaths.desktop"
-              type="image/jpeg">
-            <!-- Desktop: 1025px and above -->
-            <source media="(min-width: 1025px)" [srcset]="heroImagePaths.desktop" type="image/jpeg">
-            <!-- Fallback Image - Mobile First: object-contain to show full image -->
-            <img [src]="heroImagePaths.fallback" alt="桔梗野バイオレッツ少年野球チームの集合写真 - コーチと選手たちが笑顔で並んでいます"
-              class="w-full sm:w-[90%] md:w-[85%] lg:w-[80%] h-auto object-contain object-center sm:shadow-2xl sm:rounded-lg md:rounded-xl"
-              loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080">
-          </picture>
+  <main id="main" class="violets-page">
+    <section id="home" class="hero-section" [class.hero-section--ready]="pageReady()">
+      <div class="hero-showcase" [class.hero-showcase--ready]="pageReady()">
+        <div class="hero-flight-path" aria-hidden="true"></div>
+        <picture class="hero-keyvisual" [style.--hero-parallax-offset.px]="heroParallaxOffset()">
+          <img src="/assets/images/hero-firstview-generated.png" alt="少年野球のグラウンドとバイオレッツの野球ボール" />
+        </picture>
+        <div class="hero-overlay" [class.hero-overlay--ready]="pageReady()">
+          <h1><span class="hero-overlay__title-line">打て、走れ、</span><span class="hero-overlay__title-line">笑え。</span></h1>
+          <p class="hero-overlay__lede">桔梗野バイオレッツで野球の楽しさを仲間と育てよう</p>
+          <div class="hero-overlay__actions">
+            <a href="#join" class="hero-overlay__button hero-overlay__button--primary">
+              <span>⚾</span>体験入団する<i>›</i>
+            </a>
+            <a href="#gallery" class="hero-overlay__button hero-overlay__button--light">
+              <span>◒</span>活動を見る<i>›</i>
+            </a>
+          </div>
         </div>
       </div>
 
-      <!-- Text Content Below Image -->
-      <div class="relative z-10 px-4 sm:px-6 md:px-8 pb-8 sm:pb-12 md:pb-16 max-w-4xl mx-auto w-full">
-        <h1
-          class="font-anton text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-wider flex flex-wrap justify-center gap-1 sm:gap-2">
-          @for(letter of heroTitleLetters(); track $index) {
-          <span class="inline-block animate-letter-reveal gradient-text-purple"
-            [style.animation-delay]="$index * 50 + 'ms'">{{ letter }}</span>
-          }
-        </h1>
-        <p class="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold animate-fade-in-up px-4 text-white"
-          style="animation-delay: 700ms;">最高の仲間と、最高の瞬間を。</p>
-        <p class="mt-4 sm:mt-6 md:mt-8 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold tracking-widest text-amber-300 animate-fade-in-up px-4"
-          style="animation-delay: 775ms;">【チームワーク・助け合い】</p>
-        <a href="#contact"
-          class="mt-6 sm:mt-8 md:mt-10 inline-block bg-amber-400 text-slate-900 font-bold py-3 px-6 sm:py-4 sm:px-8 md:px-10 rounded-full text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-amber-300 transition-transform transform hover:scale-105 animate-fade-in-up btn-shine"
-          style="animation-delay: 850ms;">
-          今すぐ無料体験に参加
-        </a>
+      <div class="hero-quick page-container" [class.hero-quick--visible]="heroQuickActive()">
+        <article class="join-promo">
+          <img src="/assets/images/join-promo-card.png" alt="仲間と一緒に成長しよう！見学・体験はいつでも大歓迎！" />
+          <a href="#join">入団案内を見る <span>⚾</span></a>
+        </article>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-white relative overflow-hidden">
-      <div class="floating-shape shape-1"></div>
-      <div class="floating-shape shape-2"></div>
-      <div class="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div class="max-w-3xl mx-auto text-center">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">
-              ABOUT US</h2>
-          </div>
-          <p class="mt-3 sm:mt-4 md:mt-6 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in px-2"
-            [style.--stagger-delay]="'100ms'">桔梗野バイオレッツへようこそ！</p>
-          <p class="mt-4 sm:mt-6 md:mt-8 text-sm sm:text-base md:text-lg leading-relaxed animate-slide-left px-2 sm:px-4"
-            [style.--stagger-delay]="'200ms'">
-            私たちは、野球を愛する子どもたちのための少年野球チームです。勝利を目指すことはもちろん、野球を通じて礼儀、協調性、そして何よりも「楽しむ心」を育むことを大切にしています。経験豊富な指導者が、一人ひとりのレベルに合わせて丁寧に指導します。
+    <section id="about" class="reference-section team-panel">
+      <div class="page-container ref-about-grid">
+        <div class="ref-copy">
+          <h2>チーム紹介</h2>
+          <h3>野球を通じて、心も体もたくましく。</h3>
+          <p>
+            私たちは「全力・礼儀・思いやり」を大切に、仲間と共に成長する喜びを育てます。
+            楽しさから始まり、目標に向かって一生懸命取り組む選手たちを全力でサポートします。
           </p>
+          <div class="ref-stat-row">
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>11名</strong><small>部員数<br>4年生11名</small></article>
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>週3日</strong><small>練習日<br>火・木・金<br>土日練習試合あり</small></article>
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>桔梗野小学校</strong><small>活動場所<br>グラウンド</small></article>
+          </div>
+        </div>
+
+        <div
+          #aboutVisual
+          class="ref-about-visual"
+          [class.ref-about-visual--visible]="aboutVisualActive()"
+        >
+          <img src="/assets/images/intro-team-4.jpg" alt="桔梗野グラウンドの様子" />
+          <img class="about-baseball-accent" src="/assets/images/about-baseball-small.png" alt="" aria-hidden="true" />
+          <article class="coach-message">
+            <h3>監督メッセージ</h3>
+            <p>
+              野球はうまくなることだけが目的ではありません。仲間を信じ、最後まであきらめない心。
+              その積み重ねが、きっと将来の力になります。
+            </p>
+            <strong>監督</strong>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Member Count Section -->
-    <section id="members" class="py-12 sm:py-16 md:py-20 lg:py-24 bg-slate-100">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8">
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">
-              MEMBER COMPOSITION</h2>
-          </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in"
-            [style.--stagger-delay]="'100ms'">現在の部員数</p>
-        </div>
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 animate-bounce-in"
-          [style.--stagger-delay]="'150ms'">
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8 text-center">
-            @for (member of memberCount(); track member.grade; let i = $index) {
-            <div>
-              <p class="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-slate-600">{{ member.grade }}</p>
-              <p class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-count-up"
-                [style.--stagger-delay]="i * 80 + 'ms'">{{ member.count }}<span
-                  class="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-500 font-sans ml-1">名</span></p>
-            </div>
-            }
-          </div>
-          <div class="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-200 text-center">
-            <p class="text-base sm:text-lg md:text-xl text-slate-600">合計部員数</p>
-            <p class="font-anton text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-amber-500 animate-count-up"
-              [style.--stagger-delay]="memberCount().length * 80 + 'ms'">{{ totalMembers() }}<span
-                class="text-xl sm:text-2xl md:text-3xl text-slate-500 font-sans ml-1">名</span></p>
-          </div>
-        </div>
+    <section id="achievements" class="reference-section achievement-panel">
+      <div class="page-container">
+        <img
+          class="achievement-image"
+          src="/assets/images/achievements-card.png"
+          alt="主な大会実績 スポ少大会 県大会出場 県少年大会 八戸市ベスト８ 市川地区親善試合 優勝 新人戦 １回戦突破 Tボールフェスタ １位" />
       </div>
     </section>
 
-    <!-- Values Section -->
-    <section id="values" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-white relative overflow-hidden">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">
-              OUR VALUES</h2>
-          </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in px-2"
-            [style.--stagger-delay]="'100ms'">私たちが大切にしていること</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-          @for (value of teamValues(); track value.title; let i = $index) {
-          <div class="text-center p-6 sm:p-8 bg-slate-50 rounded-lg shadow-lg value-card animate-rotate-in"
-            [style.--stagger-delay]="i * 150 + 'ms'">
-            <div class="inline-block p-3 sm:p-4 bg-violet-100 rounded-full animate-pulse-hover animate-float">
-              <ion-icon [name]="value.icon" class="text-3xl sm:text-4xl md:text-5xl text-violet-600"></ion-icon>
-            </div>
-            <h3 class="mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl font-bold text-slate-900">{{ value.title }}</h3>
-            <p class="mt-2 text-sm sm:text-base md:text-lg text-slate-600 px-2">{{ value.description }}</p>
-          </div>
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- Achievements Section -->
-    <section id="achievements" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-slate-100">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8">
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">
-              ACHIEVEMENTS</h2>
-          </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in"
-            [style.--stagger-delay]="'100ms'">主な大会実績</p>
-        </div>
-        <div class="max-w-2xl mx-auto">
-          <ul class="space-y-3 sm:space-y-4">
-            @for (achievement of achievements(); track achievement.title; let i = $index) {
-            <li
-              class="achievement-item bg-white p-4 sm:p-5 md:p-6 rounded-lg shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 animate-slide-left"
-              [style.--stagger-delay]="i * 100 + 'ms'">
-              <span class="text-slate-800 font-semibold text-sm sm:text-base md:text-lg flex-1">{{ achievement.title
-                }}</span>
-              <span class="font-bold text-base sm:text-lg md:text-xl text-amber-500 tracking-wider whitespace-nowrap">{{
-                achievement.result }}</span>
-            </li>
-            }
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Schedule Section -->
-    <section id="schedule" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8">
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-800 animate-title-slide-in">
-              PRACTICE & EVENTS</h2>
-          </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-slate-600 animate-zoom-in"
-            [style.--stagger-delay]="'100ms'">練習 & 年間行事</p>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16">
-          <div class="animate-slide-left">
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 text-slate-700">通常練習</h3>
-            <div class="space-y-3 sm:space-y-4">
-              @for (item of weeklySchedule(); track item.title) {
-              <div class="schedule-card bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
-                <p class="font-bold text-base sm:text-lg md:text-xl text-violet-700">{{ item.title }}</p>
-                <p class="text-slate-600 font-semibold text-sm sm:text-base mt-1">{{ item.time }}</p>
-                <p class="text-slate-500 text-xs sm:text-sm mt-1">場所: {{ item.location }}</p>
-                <p class="text-slate-500 text-xs sm:text-sm mt-1">{{ item.note }}</p>
+    <section id="schedule" class="reference-section">
+      <div class="page-container">
+        <header class="ref-heading">
+          <h2>スケジュール</h2>
+          <p>みんなで力を合わせて、全力プレー！</p>
+        </header>
+        <div class="ref-schedule-grid">
+          <div class="ref-calendar">
+            <div class="ref-calendar__top"><button>‹</button><strong>2026年 5月</strong><button>今月</button></div>
+            <div class="ref-calendar__week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+            <div class="ref-calendar__days">
+              <div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div>
+              @for (day of calendarDays(); track day.day) {
+              <div [class.has-event]="day.type">
+                <span>{{ day.day }}</span>
+                @if (day.label) { <em>{{ day.label }}</em> }
               </div>
               }
             </div>
+            <div class="ref-calendar__legend"><span></span>練習 <span></span>練習試合 <span></span>試合 <span></span>休み</div>
           </div>
-          <div class="animate-slide-right" [style.--stagger-delay]="'150ms'">
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 text-slate-700">年間予定</h3>
-            <div class="schedule-card bg-slate-50 p-4 sm:p-5 md:p-6 rounded-lg shadow-sm">
-              <ul class="space-y-2 sm:space-y-3">
-                @for (event of annualEvents(); track event.month; let i = $index) {
-                <li class="flex items-center border-b border-slate-200 last:border-b-0 py-2 animate-zoom-in"
-                  [style.--stagger-delay]="i * 50 + 'ms'">
-                  <span class="font-anton text-lg sm:text-xl md:text-2xl text-amber-500 w-12 sm:w-16 flex-shrink-0">{{
-                    event.month }}</span>
-                  <span class="text-slate-700 font-semibold text-sm sm:text-base md:text-lg flex-1">{{ event.event
-                    }}</span>
-                </li>
-                }
-              </ul>
-            </div>
-            <p class="text-center text-xs sm:text-sm text-slate-500 mt-3 sm:mt-4 px-2">※予定は変更になる場合があります。</p>
+          <div class="annual-schedule">
+            <img
+              src="/assets/images/annual-schedule-card.png"
+              alt="年間予定 1月 体力強化期間 2月 体力強化期間 3月 体力強化期間 4月 グランド開き 5月 学童大会 6月 スポ少大会 7月 県少年大会 8月 桔梗野祭り参加 9月 新人戦 10月 SG杯 11月 ６年生を送る会 12月 クリスマス会" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-violet-600 text-white">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8">
-        <div class="text-center mb-8 sm:mb-10 md:mb-12">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl animate-title-slide-in">MEMBER'S VOICE
-            </h2>
-          </div>
-          <p class="mt-2 sm:mt-3 md:mt-4 text-base sm:text-lg md:text-xl text-violet-200 animate-zoom-in px-2"
-            [style.--stagger-delay]="'100ms'">保護者の声</p>
+    <section id="voice" class="reference-section voice-panel">
+      <div class="page-container">
+        <header class="ref-heading ref-heading--row"><div><h2>選手・保護者の声</h2><p>バイオレッツでの成長の声</p></div></header>
+        <div class="ref-voices">
+          <article><span>選手の声</span><div class="avatar"></div><h3>仲間と一緒にプレーするのがとにかく楽しい！</h3><p>試合でヒットを打てたときの喜びや、みんなで声を出して守りきったときの達成感が忘れられません。</p><small>4年生　キャプテン</small></article>
+          <article><span>保護者の声</span><div class="avatar"></div><h3>礼儀や思いやりの心が育っています。</h3><p>野球を通して、あいさつや感謝の気持ち、仲間を思いやる心が育っていると感じます。</p><small>4年生保護者</small></article>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
-          @for (testimonial of testimonials(); track testimonial.name; let i = $index) {
-          <div
-            class="bg-violet-700/50 p-6 sm:p-7 md:p-8 rounded-lg shadow-xl flex flex-col testimonial-card animate-bounce-in"
-            [style.--stagger-delay]="i * 150 + 'ms'">
-            <p class="text-violet-100 flex-grow text-sm sm:text-base md:text-lg leading-relaxed">"{{ testimonial.quote
-              }}"</p>
-            <div class="mt-4 sm:mt-6">
-              <p class="font-bold text-white text-lg sm:text-xl">{{ testimonial.name }}</p>
-              <p class="text-violet-300 font-semibold text-sm sm:text-base">{{ testimonial.role }}</p>
-            </div>
-          </div>
-          }
-        </div>
+        <div class="ref-dots"><span></span><span></span><span></span><span></span></div>
       </div>
     </section>
 
-    <!-- Join Us Section -->
-    <section id="join" class="py-12 sm:py-16 md:py-20 lg:py-24 bg-amber-400">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8 text-center">
-        <div>
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-900 animate-title-slide-in">
-              新入部員 大歓迎！</h2>
+    <section id="join" class="reference-section join-guide">
+      <div class="page-container">
+        <header class="ref-heading"><h2>入団案内</h2><p>一緒に野球を楽しもう！</p></header>
+        <div class="join-guide__grid">
+          <div class="join-flow">
+            @for (step of joinSteps(); track step.number) {
+            <article>
+              <small>STEP {{ step.number }}</small>
+              <img class="join-step-icon" src="/assets/images/baseball-icon.svg" alt="" />
+              <h3>{{ step.title }}</h3>
+              <p>{{ step.text }}</p>
+            </article>
+            }
           </div>
-          <p class="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl lg:text-2xl text-slate-800 font-semibold animate-zoom-in px-2"
-            [style.--stagger-delay]="'100ms'">
-            野球に興味がある子、集まれ！体験入部はいつでもOK！
-          </p>
-          <div
-            class="mt-6 sm:mt-8 max-w-2xl mx-auto bg-white/50 rounded-lg p-4 sm:p-5 md:p-6 space-y-2 sm:space-y-3 text-slate-700 font-medium animate-bounce-in px-4"
-            [style.--stagger-delay]="'200ms'">
-            <p class="text-sm sm:text-base md:text-lg">※ 体験入部する人はお父さんかお母さんと一緒にきてね！</p>
-            <p class="font-bold text-base sm:text-lg md:text-xl">火・木・金・土・日、コーチはだいたいいます！</p>
-          </div>
-          <a href="#contact"
-            class="mt-6 sm:mt-8 md:mt-10 inline-block bg-violet-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 md:px-10 rounded-full text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-violet-700 transition-transform transform hover:scale-105 animate-zoom-in btn-shine"
-            [style.--stagger-delay]="'300ms'">
-            お問い合わせはこちら
-          </a>
+          <aside class="check-card">
+            <h3>持ち物チェックリスト</h3>
+            @for (gear of gearChecklist(); track gear) {
+            <p>☑ {{ gear }}</p>
+            }
+            <p>☑ 着替え</p>
+          </aside>
+          <img
+            #joinVisualImage
+            class="join-guide__visual"
+            [class.join-guide__visual--visible]="joinVisualActive()"
+            src="/assets/images/intro-team-5.jpg"
+            alt="野球道具" />
         </div>
+        <div class="join-cta"><strong>体験・見学はいつでも大歓迎！</strong><span>まずはお気軽にお問い合わせください。</span><a href="#contact">体験申込・お問い合わせはこちら　›</a></div>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-12 sm:py-16 md:py-20 lg:py-32 bg-white">
-      <div class="container mx-auto px-4 sm:px-6 md:px-8">
-        <div class="max-w-3xl mx-auto text-center">
-          <div class="section-title-container">
-            <h2 class="font-anton text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-violet-600 animate-title-slide-in">
-              JOIN US & CONTACT</h2>
-          </div>
-          <p class="mt-3 sm:mt-4 md:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 animate-zoom-in px-2"
-            [style.--stagger-delay]="'100ms'">
-            野球をやってみたい、見学してみたい、どんなことでもお気軽にお問い合わせください！<br class="hidden sm:block">
-            私たちと一緒に、最高の思い出を作りましょう！
-          </p>
-        </div>
-
-        <div class="mt-8 sm:mt-10 md:mt-12 max-w-2xl mx-auto animate-slide-left" [style.--stagger-delay]="'150ms'">
-          @switch (formStatus()) {
-          @case ('success') {
-          <div
-            class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 sm:p-5 md:p-6 rounded-lg shadow-md text-center"
-            role="alert">
-            <p class="font-bold text-lg sm:text-xl mb-2">送信完了！</p>
-            <p class="text-sm sm:text-base">お問い合わせいただきありがとうございます。担当者より折り返しご連絡いたしますので、今しばらくお待ちください。</p>
-          </div>
-          }
-          @case ('error') {
-          <div
-            class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 sm:p-5 md:p-6 rounded-lg shadow-md text-center"
-            role="alert">
-            <p class="font-bold text-base sm:text-lg">送信に失敗しました。</p>
-            <p class="text-sm sm:text-base mt-1">申し訳ありませんが、もう一度お試しいただくか、時間をおいて再度お試しください。</p>
-          </div>
-          }
-          @default {
-          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4 sm:space-y-5 md:space-y-6">
-            <div>
-              <label for="name" class="block text-xs sm:text-sm font-medium text-slate-700">お名前 <span
-                  class="text-red-500">*</span></label>
-              <input type="text" id="name" formControlName="name"
-                class="mt-1 block w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500"
-                [class.border-red-500]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
-              @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">お名前は必須です。</p>
-              }
-            </div>
-            <div>
-              <label for="email" class="block text-xs sm:text-sm font-medium text-slate-700">メールアドレス <span
-                  class="text-red-500">*</span></label>
-              <input type="email" id="email" formControlName="email"
-                class="mt-1 block w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500"
-                [class.border-red-500]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
-              @if (contactForm.get('email')?.touched && contactForm.get('email')?.hasError('required')) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">メールアドレスは必須です。</p>
-              }
-              @if (contactForm.get('email')?.touched && contactForm.get('email')?.hasError('email')) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">有効なメールアドレスを入力してください。</p>
-              }
-            </div>
-            <div>
-              <label for="subject" class="block text-xs sm:text-sm font-medium text-slate-700">件名 <span
-                  class="text-red-500">*</span></label>
-              <input type="text" id="subject" formControlName="subject"
-                class="mt-1 block w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500"
-                [class.border-red-500]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
-              @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">件名は必須です。</p>
-              }
-            </div>
-            <div>
-              <label for="message" class="block text-xs sm:text-sm font-medium text-slate-700">メッセージ <span
-                  class="text-red-500">*</span></label>
-              <textarea id="message" formControlName="message" rows="5"
-                class="mt-1 block w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-violet-500 focus:border-violet-500 resize-y"
-                [class.border-red-500]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"></textarea>
-              @if (contactForm.get('message')?.touched && contactForm.get('message')?.hasError('required')) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">メッセージは必須です。</p>
-              }
-              @if (contactForm.get('message')?.touched && contactForm.get('message')?.hasError('minlength')) {
-              <p class="mt-1 text-xs sm:text-sm text-red-600">メッセージは10文字以上で入力してください。</p>
-              }
-            </div>
-            <div>
-              <button type="submit" [disabled]="contactForm.invalid || formStatus() === 'submitting'"
-                class="w-full flex justify-center py-3 sm:py-4 px-6 sm:px-8 border border-transparent rounded-full shadow-sm text-sm sm:text-base md:text-lg font-bold text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all transform hover:scale-105 active:scale-95">
-                @if (formStatus() === 'submitting') {
-                <span>送信中...</span>
-                } @else {
-                <span>送信する</span>
-                }
-              </button>
-            </div>
-          </form>
-          }
-          }
+    <section id="gallery" class="reference-section gallery-panel">
+      <div class="page-container">
+        <header class="ref-heading"><h2>ギャラリー</h2><p>バイオレッツの活動の様子</p></header>
+        <div class="ref-gallery-grid">
+          <img src="/assets/images/intro-team-4.jpg" alt="野球場" />
+          <img src="/assets/images/intro-team-5.jpg" alt="野球道具" />
+          <img src="/assets/images/intro-team-1.jpg" alt="練習風景" />
+          <img src="/assets/images/intro-team-3.jpg" alt="整列する選手" />
+          <img src="/assets/images/intro-team-2.jpg" alt="集合写真" />
+          <img src="/assets/images/hero-team-desktop.jpg" alt="チーム集合写真" />
         </div>
       </div>
     </section>

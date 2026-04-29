@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">桔梗野バイオレッツ wireframe placeholder</title>
+  <desc id="desc">写真差し替え用のワイヤーフレームOG画像</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#241144" />
+      <stop offset="100%" stop-color="#6537a0" />
+    </linearGradient>
+    <pattern id="lines" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="24" height="24" fill="none" />
+      <rect width="8" height="24" fill="rgba(255,255,255,0.05)" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#lines)" opacity="0.6" />
+  <path d="M0 24 L1180 630" stroke="rgba(255,255,255,0.18)" stroke-width="6" />
+  <path d="M900 0 L540 630" stroke="rgba(255,255,255,0.22)" stroke-width="6" />
+  <g fill="#ffffff">
+    <text x="76" y="118" font-family="Arial Black, Yu Gothic, sans-serif" font-size="28" letter-spacing="4">KIKYONO</text>
+    <text x="76" y="182" font-family="Arial Black, Yu Gothic, sans-serif" font-size="82">VIOLETS</text>
+    <text x="76" y="292" font-family="Yu Gothic, Meiryo, sans-serif" font-size="64" font-weight="700">写真差し替え用</text>
+    <text x="76" y="360" font-family="Yu Gothic, Meiryo, sans-serif" font-size="64" font-weight="700">ワイヤーフレーム</text>
+  </g>
+  <rect x="76" y="424" width="304" height="82" rx="41" fill="#f4c327" />
+  <text x="228" y="474" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="32" font-weight="700" fill="#332402">体験入部はこちら</text>
+  <rect x="840" y="118" width="250" height="320" rx="16" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.28)" stroke-width="3" stroke-dasharray="10 8" />
+  <path d="M840 118 L1090 438" stroke="rgba(255,255,255,0.22)" stroke-width="5" />
+  <path d="M1090 118 L840 438" stroke="rgba(255,255,255,0.22)" stroke-width="5" />
+  <rect x="892" y="246" width="146" height="42" rx="21" fill="rgba(36,17,68,0.7)" />
+  <text x="965" y="274" text-anchor="middle" font-family="Yu Gothic, Meiryo, sans-serif" font-size="24" font-weight="700" fill="#ffffff">集合写真</text>
+</svg>

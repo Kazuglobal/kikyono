@@ -1,41 +1,39 @@
-import { ChangeDetectionStrategy, Component, signal, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '(window:scroll)': 'onWindowScroll()',
-    '[class.bg-white/80]': 'isScrolled()',
-    '[class.shadow-md]': 'isScrolled()',
-    '[class.backdrop-blur-lg]': 'isScrolled()',
-    '[class.text-slate-800]': 'isScrolled()',
-    '[class.text-white]': '!isScrolled()',
-    'class': 'fixed top-0 left-0 right-0 z-50 transition-all duration-300'
-  }
+    class: 'site-header',
+  },
 })
 export class HeaderComponent {
-  isScrolled = signal(false);
-  isMobileMenuOpen = signal(false);
-  activeSectionId = input<string>('');
+  readonly activeSectionId = input<string>('home');
+  readonly isMobileMenuOpen = signal(false);
 
-  navLinks = [
-    { path: '#about', label: 'チーム紹介' },
-    { path: '#members', label: '部員数' },
-    { path: '#achievements', label: '実績' },
-    { path: '#schedule', label: 'スケジュール' },
-    { path: '#testimonials', label: 'メンバーの声' },
-    { path: '#contact', label: 'お問い合わせ' },
+  readonly navLinks = [
+    { path: '#home', label: 'ホーム', sublabel: 'HOME' },
+    { path: '#about', label: 'チーム紹介', sublabel: 'ABOUT' },
+    { path: '#achievements', label: '大会実績', sublabel: 'RESULTS' },
+    { path: '#schedule', label: 'スケジュール', sublabel: 'SCHEDULE' },
+    { path: '#join', label: '入団案内', sublabel: 'JOIN' },
+    { path: '#contact', label: 'お問い合わせ', sublabel: 'CONTACT' },
   ];
 
-  onWindowScroll() {
-    this.isScrolled.set(window.scrollY > 50);
+  isActive(path: string): boolean {
+    if (path === '#home') {
+      return this.activeSectionId() === 'home' || !this.activeSectionId();
+    }
+
+    return path === `#${this.activeSectionId()}`;
   }
 
-  toggleMobileMenu() {
-    this.isMobileMenuOpen.update(open => !open);
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen.update((open) => !open);
   }
 
-  closeMobileMenu() {
+  closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
   }
 }

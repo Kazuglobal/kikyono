@@ -1,44 +1,62 @@
-<header class="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-  <div class="flex justify-between items-center">
-    <a href="#home" class="font-bold text-base sm:text-lg md:text-xl lg:text-2xl tracking-wide whitespace-nowrap">
-      桔梗野バイオレッツ
+<div class="page-container header-bar">
+  <a href="#home" class="brand-lockup" aria-label="桔梗野バイオレッツ ホーム">
+    <span class="brand-lockup__script">
+      <small>KIKYONO</small>
+      Violets
+      <em>BASEBALL TEAM</em>
+    </span>
+    <span class="brand-lockup__divider"></span>
+    <span class="brand-lockup__jp">
+      <strong>桔梗野バイオレッツ</strong>
+      <small>少年野球チーム</small>
+    </span>
+  </a>
+
+  <nav class="desktop-nav" aria-label="メインナビゲーション">
+    @for (link of navLinks; track link.path) {
+    <a
+      [href]="link.path"
+      class="desktop-nav__link"
+      [class.is-active]="isActive(link.path)"
+    >
+      <span>{{ link.label }}</span>
+      <small>{{ link.sublabel }}</small>
     </a>
-    <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-      @for (link of navLinks; track link.path) {
-        <a [href]="link.path" class="font-bold text-sm lg:text-base hover:text-violet-600 transition-colors" [class.text-violet-600]="link.path === '#' + activeSectionId()">{{ link.label }}</a>
-      }
-    </nav>
-    <div class="hidden lg:block">
-       <a href="#contact" class="bg-violet-600 text-white font-bold py-2 px-4 xl:px-6 rounded-full text-sm lg:text-base hover:bg-violet-700 transition-all transform hover:scale-105">
-        体験申し込み
-      </a>
-    </div>
+    }
+  </nav>
 
-    <!-- Mobile Menu Button -->
-    <div class="lg:hidden">
-      <button (click)="toggleMobileMenu()" class="focus:outline-none p-2 -mr-2" aria-label="メニューを開く">
-        <svg class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          @if (!isMobileMenuOpen()) {
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8"></path>
-          } @else {
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          }
-        </svg>
-      </button>
-    </div>
-  </div>
+  <a href="#join" class="header-cta">体験入団する</a>
 
-  <!-- Mobile Menu -->
-  @if (isMobileMenuOpen()) {
-    <div class="lg:hidden mt-3 sm:mt-4 bg-white text-slate-800 rounded-lg shadow-xl p-4 sm:p-5 md:p-6 animate-fade-in-up" style="animation-duration: 0.3s;">
-      <nav class="flex flex-col space-y-4 sm:space-y-5 md:space-y-6 text-center">
-        @for (link of navLinks; track link.path) {
-          <a [href]="link.path" (click)="closeMobileMenu()" class="font-bold text-base sm:text-lg md:text-xl hover:text-violet-600 transition-colors py-2" [class.text-violet-600]="link.path === '#' + activeSectionId()">{{ link.label }}</a>
-        }
-        <a href="#contact" (click)="closeMobileMenu()" class="mt-2 sm:mt-4 inline-block bg-amber-400 text-slate-900 font-bold py-3 px-6 sm:px-8 rounded-full text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-amber-300 transition-transform transform hover:scale-105 active:scale-95">
-          無料体験に参加する
-        </a>
-      </nav>
-    </div>
-  }
-</header>
+  <button
+    type="button"
+    class="mobile-nav-toggle"
+    (click)="toggleMobileMenu()"
+    [attr.aria-expanded]="isMobileMenuOpen()"
+    aria-label="メニューを開く"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
+@if (isMobileMenuOpen()) {
+<div class="mobile-nav-panel">
+  <nav class="mobile-nav-panel__links" aria-label="モバイルナビゲーション">
+    @for (link of navLinks; track link.path) {
+    <a
+      [href]="link.path"
+      class="mobile-nav-panel__link"
+      [class.is-active]="isActive(link.path)"
+      (click)="closeMobileMenu()"
+    >
+      {{ link.label }}
+    </a>
+    }
+
+    <a href="#join" class="header-cta header-cta--mobile" (click)="closeMobileMenu()">
+      体験入団する
+    </a>
+  </nav>
+</div>
+}

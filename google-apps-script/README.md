@@ -45,16 +45,16 @@
 
 ### ステップ5: フロントエンドに設定
 
-1. `src/app.component.ts` ファイルを開く
-2. `GAS_ENDPOINT` 変数を探す（約102行目）
-3. `'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'` を、コピーしたURLに置き換える
+1. `src/components/footer/footer.component.ts` ファイルを開く
+2. `gasEndpoint` を探す
+3. `'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL'` を、コピーしたURLに置き換える
 
 ```typescript
 // 変更前
-const GAS_ENDPOINT = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+private readonly gasEndpoint = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
 
 // 変更後（例）
-const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycby...../exec';
+private readonly gasEndpoint = 'https://script.google.com/macros/s/AKfycby...../exec';
 ```
 
 4. ファイルを保存
@@ -81,8 +81,9 @@ const RECIPIENT_EMAIL = 'your-email@example.com'; // ここを変更
    - A1: `日時`
    - B1: `お名前`
    - C1: `メールアドレス`
-   - D1: `件名`
-   - E1: `メッセージ`
+   - D1: `学年`
+   - E1: `希望内容`
+   - F1: `メッセージ`
 3. スプレッドシートのURLからIDをコピー
    - URL: `https://docs.google.com/spreadsheets/d/【この部分がID】/edit`
 4. Google Apps Scriptの `logToSpreadsheet` 関数内のコメントを外す
@@ -96,7 +97,8 @@ sheet.appendRow([
   Utilities.formatDate(timestamp, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss'),
   name,
   email,
-  subject,
+  grade,
+  inquiryType,
   message
 ]);
 ```
@@ -121,6 +123,26 @@ sheet.appendRow([
 2. テストデータを入力して送信
 3. `globalbunny77@gmail.com` に確認メールが届くことを確認
 
+### 3. Apps Script単体でメール送信を確認
+
+フォームから届かない場合は、先にGAS単体でメール送信権限を確認してください。
+
+1. Google Apps Scriptエディタを開く
+2. 関数選択プルダウンで `sendTestEmail` を選択
+3. 「実行」をクリック
+4. 初回は権限承認を行う
+5. `globalbunny77@gmail.com` に「【テスト送信】」メールが届くことを確認
+
+`sendTestEmail` で届かない場合、原因はLPではなくGASの承認・実行権限・送信先メール側にあります。
+
+### 4. フォーム送信ログの確認
+
+フォーム送信後、画面に `violets-...` 形式の受付IDが表示されます。GASエディタ左側の「実行数」で同じ受付IDを探すと、どこまで処理されたか確認できます。
+
+- `contact_form_received`: GASがフォームを受信済み
+- `contact_form_mail_sent`: メール送信処理完了
+- `contact_form_error`: GAS側でエラー発生
+
 ## 🔧 トラブルシューティング
 
 ### メールが届かない場合
@@ -134,6 +156,11 @@ sheet.appendRow([
 
 3. **権限を再確認**
    - デプロイ設定で「アクセスできるユーザー: 全員」になっているか確認
+   - 「次のユーザーとして実行: 自分のアカウント」になっているか確認
+
+4. **新しいバージョンで再デプロイ**
+   - GASコードを更新しただけでは公開URLに反映されない場合があります
+   - 「デプロイ」→「デプロイを管理」→鉛筆アイコン→「バージョン: 新バージョン」→「デプロイ」を実行してください
 
 ### フォーム送信エラーの場合
 
@@ -142,7 +169,7 @@ sheet.appendRow([
    - Consoleタブでエラーメッセージを確認
 
 2. **URLが正しいか確認**
-   - `src/app.component.ts`のGAS_ENDPOINTが正しいURLになっているか
+   - `src/components/footer/footer.component.ts` の `gasEndpoint` が正しいURLになっているか
 
 3. **CORSエラーの場合**
    - Google Apps Scriptは`mode: 'no-cors'`で正常に動作します
@@ -152,17 +179,23 @@ sheet.appendRow([
 
 ### 送信されるメール形式
 
-- **件名**: `【お問い合わせ】{ユーザーが入力した件名} - 桔梗野バイオレッツ少年野球チーム`
+- **件名**: `【体験・見学お問い合わせ】{希望内容} - {保護者のお名前}`
 - **送信元**: 桔梗野バイオレッツ少年野球チーム
 - **返信先**: お問い合わせ者のメールアドレス（返信ボタンで直接返信可能）
 - **形式**: HTML形式（見やすいデザイン）+ テキスト形式
 
 ### 含まれる情報
 
-- お名前
+- 保護者のお名前
+- お子さまのお名前
+- 学年
 - メールアドレス
-- 件名
-- メッセージ
+- 電話番号
+- 希望内容（体験希望、見学希望、入団相談など）
+- 希望参加日
+- 野球経験
+- お問い合わせ内容
+- 同意確認
 - 受信日時
 
 ## 🔐 セキュリティ
