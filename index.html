@@ -2923,7 +2923,9 @@
       .ref-gallery-grid img,
       .ref-gallery-grid img:nth-child(n) {
         grid-column: auto;
-        height: 220px;
+        height: auto;
+        aspect-ratio: auto;
+        object-fit: contain;
       }
     }
 
@@ -4018,7 +4020,6 @@
     .hero-keyvisual img {
       transform: translate3d(0, var(--hero-parallax-offset), 0) scale(1.045);
       transform-origin: center top;
-      transition: transform 180ms linear;
       will-change: transform;
     }
 

@@ -428,6 +428,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   private startPlayerIntro(): void {
     if (!this.playerIntroPlayers.length) {
+      this.showPlayerIntro.set(false);
+      this.playerIntroClosing.set(false);
+      this.pageReady.set(true);
+      this.syncScrollMotion();
       this.playTeamAudio();
       return;
     }
