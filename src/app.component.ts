@@ -110,7 +110,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private motionMediaQuery?: MediaQueryList;
   private firstPlayerImageReady?: Promise<void>;
   private playerIntroImagesWarmed = false;
-  private readonly playerFrameDelayMs = 980;
+  private readonly firstPlayerFrameDelayMs = 1480;
+  private readonly playerFrameDelayMs = 1120;
   private readonly heroParallaxLimit = 24;
 
   readonly playerIntroPlayers: PlayerIntroItem[] = [
@@ -446,12 +447,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         this.playerIntroClosing.set(false);
         this.audioBlocked.set(false);
         this.showPlayerIntro.set(true);
-        this.scheduleNextPlayer();
+        this.scheduleNextPlayer(this.firstPlayerFrameDelayMs);
         this.warmPlayerIntroImages();
       });
   }
 
-  private scheduleNextPlayer(): void {
+  private scheduleNextPlayer(delayMs = this.playerFrameDelayMs): void {
     this.clearPlayerIntroTimer();
     this.playerIntroTimer = setTimeout(() => {
       const nextIndex = this.currentPlayerIndex() + 1;
@@ -462,7 +463,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       }
 
       this.finishPlayerIntro();
-    }, this.playerFrameDelayMs);
+    }, delayMs);
   }
 
   private clearPlayerIntroTimer(): void {
