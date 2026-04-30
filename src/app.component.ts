@@ -54,8 +54,11 @@ interface StatTile {
 
 interface CalendarDay {
   day: string;
-  type?: 'practice' | 'game' | 'event';
+  type?: 'practice' | 'game' | 'event' | 'rest';
   label?: string;
+  time?: string;
+  location?: string;
+  note?: string;
 }
 
 interface GameResult {
@@ -235,37 +238,37 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ]);
 
   readonly calendarDays = signal<CalendarDay[]>([
-    { day: '1', type: 'practice', label: '練習' },
-    { day: '2', type: 'game', label: '練習試合' },
-    { day: '3' },
-    { day: '4' },
-    { day: '5', type: 'practice', label: '練習' },
-    { day: '6' },
-    { day: '7', type: 'practice', label: '練習' },
-    { day: '8', type: 'practice', label: '練習' },
-    { day: '9', type: 'game', label: '練習試合' },
-    { day: '10' },
-    { day: '11' },
-    { day: '12', type: 'practice', label: '練習' },
-    { day: '13' },
-    { day: '14', type: 'practice', label: '練習' },
-    { day: '15', type: 'practice', label: '練習' },
-    { day: '16', type: 'game', label: '練習試合' },
-    { day: '17' },
-    { day: '18' },
-    { day: '19', type: 'practice', label: '練習' },
-    { day: '20' },
-    { day: '21', type: 'practice', label: '練習' },
-    { day: '22', type: 'practice', label: '練習' },
-    { day: '23', type: 'game', label: '練習試合' },
-    { day: '24' },
-    { day: '25' },
-    { day: '26', type: 'practice', label: '練習' },
-    { day: '27' },
-    { day: '28', type: 'practice', label: '練習' },
-    { day: '29', type: 'practice', label: '練習' },
-    { day: '30', type: 'game', label: '練習試合' },
-    { day: '31' },
+    { day: '1', type: 'practice', time: '16:00〜18:30' },
+    { day: '2', type: 'game', label: 'マクドナルド杯', note: '@八戸球場 vs 新井田ジョーズ' },
+    { day: '3', type: 'game', label: 'マクドナルド杯' },
+    { day: '4', type: 'game', label: 'マクドナルド杯' },
+    { day: '5', type: 'practice', label: 'マクドナルド予備', time: '9:00〜12:00' },
+    { day: '6', type: 'rest', label: '休' },
+    { day: '7', type: 'practice', time: '16:00〜18:30' },
+    { day: '8', type: 'practice', time: '16:00〜18:30' },
+    { day: '9', type: 'game', label: 'スポ少予選', note: '@新井田小 vs 吹上' },
+    { day: '10', type: 'game', label: 'スポ少予選', note: '@新井田小' },
+    { day: '11', type: 'rest', label: '休' },
+    { day: '12', type: 'rest', label: '休' },
+    { day: '13', type: 'practice', time: '16:00〜18:00' },
+    { day: '14', type: 'practice', time: '16:00〜18:00' },
+    { day: '15', type: 'rest', label: '休' },
+    { day: '16', type: 'event', label: 'BBQ' },
+    { day: '17', type: 'practice', time: '9:00〜12:00' },
+    { day: '18', type: 'rest', label: '休' },
+    { day: '19', type: 'practice', time: '16:00〜18:00' },
+    { day: '20', type: 'rest', label: '休' },
+    { day: '21', type: 'practice', time: '16:00〜18:00' },
+    { day: '22', type: 'practice', time: '16:00〜18:00' },
+    { day: '23', type: 'practice', time: '9:00〜12:00' },
+    { day: '24', type: 'practice', time: '9:00〜12:00' },
+    { day: '25', type: 'rest', label: '休' },
+    { day: '26', type: 'practice', time: '16:00〜18:00' },
+    { day: '27', type: 'rest', label: '休' },
+    { day: '28', type: 'practice', time: '16:00〜18:00' },
+    { day: '29', type: 'practice', time: '16:00〜18:00' },
+    { day: '30', type: 'practice', time: '9:00〜12:00' },
+    { day: '31', type: 'practice', time: '9:00〜12:00' },
   ]);
 
   readonly annualEvents = signal<AnnualEvent[]>([

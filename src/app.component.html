@@ -142,9 +142,20 @@
             <div class="ref-calendar__days">
               <div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div>
               @for (day of calendarDays(); track day.day) {
-              <div [class.has-event]="day.type">
-                <span>{{ day.day }}</span>
-                @if (day.label) { <em>{{ day.label }}</em> }
+              <div
+                [class.has-event]="day.type"
+                [class.is-practice]="day.type === 'practice'"
+                [class.is-game]="day.type === 'game'"
+                [class.is-event]="day.type === 'event'"
+                [class.is-rest]="day.type === 'rest'"
+              >
+                <span class="ref-calendar__date">{{ day.day }}</span>
+                <div class="ref-calendar__entry">
+                  @if (day.label || day.type === 'practice') { <em>{{ day.label || '練習' }}</em> }
+                  @if (day.time) { <small class="ref-calendar__time">{{ day.time }}</small> }
+                  @if (day.location) { <strong class="ref-calendar__location">{{ day.location }}</strong> }
+                  @if (day.note) { <small class="ref-calendar__note">{{ day.note }}</small> }
+                </div>
               </div>
               }
             </div>
