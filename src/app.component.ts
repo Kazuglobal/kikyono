@@ -108,6 +108,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private playerIntroStarted = false;
   private scrollAnimationFrame?: number;
   private motionMediaQuery?: MediaQueryList;
+  private firstPlayerImageReady?: Promise<void>;
+  private playerIntroImagesWarmed = false;
   private readonly playerFrameDelayMs = 980;
   private readonly heroParallaxLimit = 24;
 
@@ -331,6 +333,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.setupReducedMotionPreference();
+    this.warmPlayerIntroImages();
     this.observer = new IntersectionObserver(
       (entries) => {
         const visibleEntry = entries
@@ -436,11 +439,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.currentPlayerIndex.set(0);
-    this.playerIntroClosing.set(false);
-    this.audioBlocked.set(false);
-    this.showPlayerIntro.set(true);
-    this.scheduleNextPlayer();
+    void this.ensureFirstPlayerImageReady()
+      .catch(() => undefined)
+      .finally(() => {
+        this.currentPlayerIndex.set(0);
+        this.playerIntroClosing.set(false);
+        this.audioBlocked.set(false);
+        this.showPlayerIntro.set(true);
+        this.scheduleNextPlayer();
+        this.warmPlayerIntroImages();
+      });
   }
 
   private scheduleNextPlayer(): void {
@@ -464,6 +472,57 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
     clearTimeout(this.playerIntroTimer);
     this.playerIntroTimer = undefined;
+  }
+
+  private warmPlayerIntroImages(): void {
+    if (this.playerIntroImagesWarmed || typeof Image === 'undefined') {
+      return;
+    }
+
+    this.playerIntroImagesWarmed = true;
+    void this.ensureFirstPlayerImageReady();
+
+    this.playerIntroPlayers.slice(1).forEach((player) => {
+      void this.preloadPlayerImage(player.src);
+    });
+  }
+
+  private ensureFirstPlayerImageReady(): Promise<void> {
+    const firstPlayer = this.playerIntroPlayers[0];
+    if (!firstPlayer) {
+      return Promise.resolve();
+    }
+
+    if (!this.firstPlayerImageReady) {
+      this.firstPlayerImageReady = this.preloadPlayerImage(firstPlayer.src);
+    }
+
+    return this.firstPlayerImageReady;
+  }
+
+  private preloadPlayerImage(src: string): Promise<void> {
+    if (typeof Image === 'undefined') {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      const image = new Image();
+      const finish = (): void => {
+        image.onload = null;
+        image.onerror = null;
+        resolve();
+      };
+
+      image.decoding = 'async';
+      image.loading = 'eager';
+      image.onload = finish;
+      image.onerror = finish;
+      image.src = src;
+
+      if (image.complete) {
+        finish();
+      }
+    });
   }
 
   private setupReducedMotionPreference(): void {

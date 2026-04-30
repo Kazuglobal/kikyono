@@ -26,7 +26,12 @@
       class="player-showcase__player"
       [class.player-showcase__player--right]="i % 2 === 1"
     >
-      <img [src]="player.src" [alt]="player.alt" />
+      <img
+        [src]="player.src"
+        [alt]="player.alt"
+        [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+        [attr.decoding]="i === 0 ? 'sync' : 'async'"
+      />
       <figcaption>
         <span>{{ player.position }}</span>
         <strong>VIOLETS</strong>
