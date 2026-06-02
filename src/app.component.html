@@ -137,10 +137,10 @@
         </header>
         <div class="ref-schedule-grid">
           <div class="ref-calendar">
-            <div class="ref-calendar__top"><button>‹</button><strong>2026年 5月</strong><button>今月</button></div>
+            <div class="ref-calendar__top"><button>‹</button><strong>2026年 6月</strong><button>今月</button></div>
             <div class="ref-calendar__week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
             <div class="ref-calendar__days">
-              <div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div><div class="is-empty"></div>
+              <div class="is-empty"></div>
               @for (day of calendarDays(); track day.day) {
               <div
                 [class.has-event]="day.type"
@@ -166,6 +166,14 @@
               src="/assets/images/annual-schedule-card.png"
               alt="年間予定 1月 体力強化期間 2月 体力強化期間 3月 体力強化期間 4月 グランド開き 5月 学童大会 6月 スポ少大会 7月 県少年大会 8月 桔梗野祭り参加 9月 新人戦 10月 SG杯 11月 ６年生を送る会 12月 クリスマス会" />
           </div>
+        </div>
+        <div class="ref-notices">
+          <h3 class="ref-notices__title">お知らせ 📢</h3>
+          <ul class="ref-notices__list">
+            @for (notice of notices(); track notice) {
+            <li>{{ notice }}</li>
+            }
+          </ul>
         </div>
       </div>
     </section>
