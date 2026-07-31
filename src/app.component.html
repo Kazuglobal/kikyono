@@ -137,10 +137,12 @@
         </header>
         <div class="ref-schedule-grid">
           <div class="ref-calendar">
-            <div class="ref-calendar__top"><button>‹</button><strong>2026年 6月</strong><button>今月</button></div>
+            <div class="ref-calendar__top"><button>‹</button><strong>2026年 8月</strong><button>今月</button></div>
             <div class="ref-calendar__week"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
             <div class="ref-calendar__days">
+              @for (blank of calendarLeadingBlanks(); track blank) {
               <div class="is-empty"></div>
+              }
               @for (day of calendarDays(); track day.day) {
               <div
                 [class.has-event]="day.type"
