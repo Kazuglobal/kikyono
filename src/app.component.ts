@@ -154,7 +154,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ]);
 
   readonly stats = signal<StatTile[]>([
-    { label: '部員数', value: '11名', note: '4年生中心で活動中' },
+    { label: '部員数', value: '15名', note: '4年生13名・1年生2名で活動中' },
     { label: '練習日', value: '週3日', note: '火・木・金（土日練習試合あり）' },
     { label: '活動場所', value: '八戸市', note: '桔梗野エリア周辺' },
   ]);
@@ -189,10 +189,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   readonly members = signal([
     { grade: '6年生', count: 0 },
     { grade: '5年生', count: 0 },
-    { grade: '4年生', count: 11 },
+    { grade: '4年生', count: 13 },
     { grade: '3年生', count: 0 },
     { grade: '2年生', count: 0 },
-    { grade: '1年生', count: 0 },
+    { grade: '1年生', count: 2 },
   ]);
 
   readonly totalMembers = computed(() =>
