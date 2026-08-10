@@ -2771,6 +2771,183 @@
       box-shadow: 0 18px 42px rgba(37,18,71,0.18);
     }
 
+    .tournament-result {
+      position: relative;
+      width: min(960px, 100%);
+      margin: 26px auto 0;
+      padding: 30px 34px 26px;
+      border-radius: 14px;
+      color: #fff;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(190,223,66,0.22), transparent 18rem),
+        linear-gradient(135deg, var(--violet) 0%, var(--violet-dark) 100%);
+      box-shadow: 0 18px 42px rgba(37,18,71,0.24);
+    }
+
+    .tournament-result::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -90px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      pointer-events: none;
+    }
+
+    .tournament-result__head {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tournament-result__period {
+      margin: 0 0 6px;
+      color: var(--lime);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.16em;
+    }
+
+    .tournament-result__title {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .tournament-result__title span {
+      font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+      font-weight: 950;
+    }
+
+    .tournament-result__title strong {
+      color: var(--lime);
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.6vw, 4rem);
+      font-weight: 950;
+      letter-spacing: 0.02em;
+    }
+
+    .tournament-result__team {
+      margin: 12px 0 0;
+      font-size: 1.05rem;
+      font-weight: 950;
+    }
+
+    .tournament-result__team small {
+      display: block;
+      margin-top: 4px;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.22em;
+    }
+
+    .tournament-result__games {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tournament-result__games li {
+      display: grid;
+      grid-template-columns: 96px 1fr 180px;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 18px 10px 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.95);
+      color: var(--violet-dark);
+    }
+
+    .tournament-result__round {
+      padding: 10px 12px;
+      border-radius: 10px 0 0 10px;
+      background: var(--violet-dark);
+      color: #fff;
+      text-align: center;
+      font-size: 0.92rem;
+      font-weight: 950;
+    }
+
+    .tournament-result__opponent {
+      font-size: 1.15rem;
+      font-weight: 950;
+    }
+
+    .tournament-result__score {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
+      padding-left: 16px;
+      border-left: 2px solid rgba(90,45,145,0.2);
+      color: var(--violet);
+      font-family: var(--font-display);
+    }
+
+    .tournament-result__score b {
+      min-width: 2.2ch;
+      text-align: center;
+      font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+      font-weight: 950;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tournament-result__score i {
+      color: var(--violet-dark);
+      font-size: 0.9rem;
+      font-style: normal;
+      font-weight: 950;
+    }
+
+    .tournament-result__thanks {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 0;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      text-align: center;
+      font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+      font-weight: 950;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 700px) {
+      .tournament-result {
+        padding: 22px 18px 20px;
+      }
+
+      .tournament-result__games li {
+        grid-template-columns: 76px 1fr 120px;
+        gap: 10px;
+        padding-right: 12px;
+      }
+
+      .tournament-result__round {
+        padding: 8px 6px;
+        font-size: 0.78rem;
+      }
+
+      .tournament-result__opponent {
+        font-size: 1rem;
+      }
+
+      .tournament-result__score {
+        gap: 6px;
+        padding-left: 10px;
+      }
+    }
+
     .ref-results {
       display: grid;
       grid-template-columns: repeat(3, 1fr);

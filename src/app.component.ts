@@ -68,6 +68,21 @@ interface GameResult {
   result: string;
 }
 
+interface TournamentGame {
+  round: string;
+  opponent: string;
+  scoreLeft: string;
+  scoreRight: string;
+}
+
+interface TournamentResult {
+  period: string;
+  name: string;
+  rank: string;
+  games: TournamentGame[];
+  thanks: string;
+}
+
 interface JoinStep {
   number: string;
   title: string;
@@ -212,9 +227,20 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     { title: 'スポ少大会', result: '【県大会出場】' },
     { title: '県少年大会', result: '【八戸市ベスト８】' },
     { title: '市川地区親善試合', result: '【優勝】' },
-    { title: '新人戦', result: '【１回戦突破】' },
+    { title: '新人戦', result: '【ベスト８】' },
     { title: 'Tボールフェスタ', result: '【１位】' },
   ]);
+
+  readonly tournamentResult = signal<TournamentResult>({
+    period: '2026年8月',
+    name: '新人戦',
+    rank: 'ベスト8',
+    games: [
+      { round: '1回戦', opponent: '多賀台', scoreLeft: '4', scoreRight: '7' },
+      { round: '2回戦', opponent: '白山台', scoreLeft: '12', scoreRight: '6' },
+    ],
+    thanks: '応援ありがとうございました',
+  });
 
   readonly gameResults = signal<GameResult[]>([
     { date: '10.14', opponent: '市川クラブ', score: '7 - 4', result: 'WIN' },
@@ -247,10 +273,10 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     { day: '5', type: 'rest', label: '休' },
     { day: '6', type: 'practice', time: '16:00〜18:30' },
     { day: '7', type: 'practice', time: '16:00〜18:30' },
-    { day: '8', type: 'game', label: '新人戦', location: '@福地', note: 'vs 多賀台' },
-    { day: '9', type: 'game', label: '新人戦', note: '会場・対戦相手未定' },
+    { day: '8', type: 'game', label: '新人戦1回戦', location: '@福地', note: 'vs 多賀台 4-7' },
+    { day: '9', type: 'game', label: '新人戦2回戦', note: 'vs 白山台 12-6' },
     { day: '10', type: 'rest', label: '休' },
-    { day: '11', type: 'game', label: '新人戦', note: '会場・対戦相手未定' },
+    { day: '11', type: 'practice', time: '9:00〜12:00', note: '通常練習' },
     { day: '12', type: 'rest', label: '休' },
     { day: '13', type: 'rest', label: '休' },
     { day: '14', type: 'rest', label: '休' },
@@ -274,13 +300,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   ]);
 
   readonly notices = signal([
+    '⚾ 新人戦 ベスト8！ 応援ありがとうございました',
     '8/1(土) PM 歓迎会&決起会 @桔梗野生活館',
-    '新人戦まで練習延長',
     '8/15(土) 新人戦予備日',
     '9/5・6 新人戦県大会 @十和田',
     '9/12・13・22 ナガセケンコー杯',
-    '新人戦について ⚾ 9日勝った場合 → 10日 9:00〜12:00 自主練、11日 試合',
-    '新人戦について ⚾ 9日負けた場合 → 10日 休み、11日 9:00〜12:00 通常練習',
   ]);
 
   readonly annualEvents = signal<AnnualEvent[]>([
