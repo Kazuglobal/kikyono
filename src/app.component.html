@@ -125,7 +125,33 @@
         <img
           class="achievement-image"
           src="/assets/images/achievements-card.png"
-          alt="主な大会実績 スポ少大会 県大会出場 県少年大会 八戸市ベスト８ 市川地区親善試合 優勝 新人戦 １回戦突破 Tボールフェスタ １位" />
+          alt="主な大会実績 スポ少大会 県大会出場 県少年大会 八戸市ベスト８ 市川地区親善試合 優勝 新人戦 ベスト８ Tボールフェスタ １位" />
+
+        <article class="tournament-result" aria-labelledby="tournament-result-title">
+          <div class="tournament-result__head">
+            <p class="tournament-result__period">{{ tournamentResult().period }}</p>
+            <h3 id="tournament-result-title" class="tournament-result__title">
+              <span>{{ tournamentResult().name }}</span>
+              <strong>{{ tournamentResult().rank }}</strong>
+            </h3>
+            <p class="tournament-result__team">
+              桔梗野バイオレッツ
+              <small>KIKYONO VIOLETS</small>
+            </p>
+          </div>
+          <ol class="tournament-result__games">
+            @for (game of tournamentResult().games; track game.round) {
+            <li>
+              <span class="tournament-result__round">{{ game.round }}</span>
+              <span class="tournament-result__opponent">{{ game.opponent }}</span>
+              <span class="tournament-result__score">
+                <b>{{ game.scoreLeft }}</b><i>対</i><b>{{ game.scoreRight }}</b>
+              </span>
+            </li>
+            }
+          </ol>
+          <p class="tournament-result__thanks">{{ tournamentResult().thanks }}</p>
+        </article>
       </div>
     </section>
 
