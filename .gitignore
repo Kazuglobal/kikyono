@@ -29,3 +29,7 @@ dist-ssr
 
 # Claude AI local settings (may contain PII)
 .claude/
+
+# Python bytecode (scripts/optimize-images.py)
+__pycache__/
+*.pyc

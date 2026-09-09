@@ -5,12 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>桔梗野バイオレッツ少年野球チーム | 公式サイト</title>
   <meta name="description" content="青森県八戸市の少年野球チーム「桔梗野バイオレッツ」公式サイト。チーム紹介、練習スケジュール、試合結果、体験入団案内をご覧いただけます。">
-  <meta name="keywords" content="桔梗野バイオレッツ, 少年野球, 八戸市, 学童野球, 体験入団, スケジュール">
+  <meta name="theme-color" content="#5a2d91">
+  <link rel="canonical" href="https://kikyono-violets.xyz/">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/images/baseball-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kikyono-violets.xyz/">
+  <meta property="og:site_name" content="桔梗野バイオレッツ少年野球チーム">
   <meta property="og:title" content="桔梗野バイオレッツ少年野球チーム | 公式サイト">
   <meta property="og:description" content="走れ、打て、笑え。青森県八戸市で活動する少年野球チーム、桔梗野バイオレッツの公式サイトです。">
-  <meta property="og:image" content="assets/images/og-placeholder.svg">
+  <!-- SNS のクローラは SVG の OGP 画像を表示できないため、1200x630 の JPEG を指定する -->
+  <meta property="og:image" content="https://kikyono-violets.xyz/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="桔梗野バイオレッツのグラウンドとチームカラーの野球ボール">
   <meta property="og:locale" content="ja_JP">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="桔梗野バイオレッツ少年野球チーム | 公式サイト">
+  <meta name="twitter:description" content="走れ、打て、笑え。青森県八戸市で活動する少年野球チーム、桔梗野バイオレッツの公式サイトです。">
+  <meta name="twitter:image" content="https://kikyono-violets.xyz/assets/images/og-image.jpg">
+
+  <!-- 最初に画面に出るのは選手紹介の 1 枚目。JS の初期化を待たずに取得を始める。
+       WebP 非対応のブラウザは type 指定によりこの preload をスキップする。 -->
+  <link rel="preload" as="image" type="image/webp" href="/assets/images/player-intro/player-01.webp">
 
   <style>
     :root {
@@ -56,6 +77,16 @@
     }
 
     a { color: inherit; text-decoration: none; }
+
+    /* WebP フォールバック用の <picture> はレイアウト上存在しないものとして扱う。
+       これにより中の <img> が従来どおり親の grid / flex アイテムになる。
+       ヒーローの .hero-keyvisual は自身がレイアウトを持つため対象外。 */
+    picture.img-fmt { display: contents; }
+
+    /* display:contents にすると <source> まで親の grid / flex アイテムとして
+       数えられてしまうため、明示的にレイアウトから外す。
+       画像の切り替え自体は CSS ではなく HTML の選択アルゴリズムが行うので影響しない。 */
+    picture.img-fmt > source { display: none; }
     img { display: block; max-width: 100%; }
     button, input, textarea { font: inherit; }
 
@@ -963,6 +994,13 @@
       background:
         linear-gradient(180deg, rgba(37, 18, 71, 0.26), rgba(37, 18, 71, 0.88)),
         url("/assets/images/intro-team-1.jpg") center / cover;
+      /* image-set に対応したブラウザには WebP を配信する（非対応なら上の宣言のまま） */
+      background:
+        linear-gradient(180deg, rgba(37, 18, 71, 0.26), rgba(37, 18, 71, 0.88)),
+        image-set(
+          url("/assets/images/intro-team-1.webp") type("image/webp"),
+          url("/assets/images/intro-team-1.jpg") type("image/jpeg")
+        ) center / cover;
     }
 
     .location-card strong {
@@ -2371,7 +2409,8 @@
       padding: 0;
     }
 
-    .ref-about-visual > img {
+    .ref-about-visual > img,
+    .ref-about-visual > picture > img {
       width: 100%;
       height: 260px;
       object-fit: cover;
@@ -2394,7 +2433,8 @@
       content: none;
     }
 
-    .ref-about-visual > img.about-baseball-accent {
+    .ref-about-visual > img.about-baseball-accent,
+    .ref-about-visual > picture > img.about-baseball-accent {
       position: absolute;
       top: 288px;
       right: 138px;
@@ -2754,12 +2794,24 @@
       background:
         linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.9)),
         url("/assets/images/intro-team-4.jpg") center / cover;
+      background:
+        linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.9)),
+        image-set(
+          url("/assets/images/intro-team-4.webp") type("image/webp"),
+          url("/assets/images/intro-team-4.jpg") type("image/jpeg")
+        ) center / cover;
     }
 
     .achievement-panel {
       background:
         linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.96)),
         url("/assets/images/intro-team-2.jpg") center / cover;
+      background:
+        linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.96)),
+        image-set(
+          url("/assets/images/intro-team-2.webp") type("image/webp"),
+          url("/assets/images/intro-team-2.jpg") type("image/jpeg")
+        ) center / cover;
     }
 
     .achievement-image {
@@ -3163,7 +3215,8 @@
       font-weight: 850;
     }
 
-    .join-guide__grid > img {
+    .join-guide__grid > img,
+    .join-guide__grid > picture > img {
       width: 100%;
       height: 100%;
       min-height: 220px;
@@ -3219,9 +3272,7 @@
       box-shadow: 0 8px 20px rgba(37,18,71,0.09);
     }
 
-    .ref-gallery-grid img:nth-child(1),
-    .ref-gallery-grid img:nth-child(2),
-    .ref-gallery-grid img:nth-child(3) {
+    .ref-gallery-grid > picture:nth-child(-n + 3) > img {
       grid-column: span 2;
       height: 170px;
     }
@@ -3313,10 +3364,12 @@
       }
 
       .ref-gallery-grid img,
-      .ref-gallery-grid img:nth-child(n) {
+      .ref-gallery-grid > picture:nth-child(n) > img {
         grid-column: auto;
         height: auto;
-        aspect-ratio: auto;
+        /* aspect-ratio は指定しない。width / height 属性から導かれる比率を使うことで、
+           loading="lazy" の画像も読み込み前から高さを確保でき、
+           「高さ 0 のままビューポートに入らず読み込まれない」状態を防ぐ。 */
         object-fit: contain;
       }
     }
@@ -3835,13 +3888,15 @@
         padding-right: 130px;
       }
 
-      .ref-about-visual > img.about-baseball-accent {
+      .ref-about-visual > img.about-baseball-accent,
+      .ref-about-visual > picture > img.about-baseball-accent {
         top: 292px;
         right: 126px;
         width: 76px;
       }
 
-      .join-guide__grid > img {
+      .join-guide__grid > img,
+      .join-guide__grid > picture > img {
         max-height: 360px;
       }
 
@@ -3979,7 +4034,8 @@
         padding: 0;
       }
 
-      .ref-about-visual > img {
+      .ref-about-visual > img,
+      .ref-about-visual > picture > img {
         height: 210px;
         clip-path: none;
         border-radius: 12px;
@@ -3987,7 +4043,8 @@
 
       .ref-about-visual::before,
       .ref-about-visual::after,
-      .ref-about-visual > img.about-baseball-accent {
+      .ref-about-visual > img.about-baseball-accent,
+      .ref-about-visual > picture > img.about-baseball-accent {
         display: none;
       }
 
@@ -4065,7 +4122,8 @@
         display: none;
       }
 
-      .join-guide__grid > img {
+      .join-guide__grid > img,
+      .join-guide__grid > picture > img {
         min-height: 220px;
         height: 240px;
       }
@@ -4678,16 +4736,37 @@
   {
     "@context": "https://schema.org",
     "@type": "SportsTeam",
+    "@id": "https://kikyono-violets.xyz/#team",
     "name": "桔梗野バイオレッツ少年野球チーム",
     "alternateName": "Kikyono Violets",
     "sport": "野球",
+    "url": "https://kikyono-violets.xyz/",
     "email": "violets.baseball@gmail.com",
     "description": "青森県八戸市で活動する少年野球チーム、桔梗野バイオレッツの公式サイト。",
+    "logo": "https://kikyono-violets.xyz/assets/images/baseball-icon.svg",
+    "image": "https://kikyono-violets.xyz/assets/images/og-image.jpg",
     "address": {
       "@type": "PostalAddress",
       "postalCode": "031-0023",
       "addressRegion": "青森県",
-      "addressLocality": "八戸市"
+      "addressLocality": "八戸市",
+      "addressCountry": "JP"
+    },
+    "location": {
+      "@type": "SportsActivityLocation",
+      "name": "八戸市立桔梗野小学校 グラウンド",
+      "address": {
+        "@type": "PostalAddress",
+        "postalCode": "031-0023",
+        "addressRegion": "青森県",
+        "addressLocality": "八戸市",
+        "addressCountry": "JP"
+      }
+    },
+    "potentialAction": {
+      "@type": "JoinAction",
+      "name": "体験入団・見学の申し込み",
+      "target": "https://kikyono-violets.xyz/#contact"
     }
   }
   </script>
