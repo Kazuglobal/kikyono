@@ -26,12 +26,17 @@
       class="player-showcase__player"
       [class.player-showcase__player--right]="i % 2 === 1"
     >
-      <img
-        [src]="player.src"
-        [alt]="player.alt"
-        [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
-        [attr.decoding]="i === 0 ? 'sync' : 'async'"
-      />
+      <picture class="img-fmt">
+        <source [srcset]="player.webp" type="image/webp" />
+        <img
+          [src]="player.src"
+          [alt]="player.alt"
+          width="1122"
+          height="1402"
+          [attr.fetchpriority]="i === 0 ? 'high' : 'auto'"
+          [attr.decoding]="i === 0 ? 'sync' : 'async'"
+        />
+      </picture>
       <figcaption>
         <span>{{ player.position }}</span>
         <strong>VIOLETS</strong>
@@ -61,7 +66,20 @@
       <div class="hero-showcase" [class.hero-showcase--ready]="pageReady()">
         <div class="hero-flight-path" aria-hidden="true"></div>
         <picture class="hero-keyvisual" [style.--hero-parallax-offset.px]="heroParallaxOffset()">
-          <img src="/assets/images/hero-firstview-generated.png" alt="少年野球のグラウンドとバイオレッツの野球ボール" />
+          <source
+            media="(max-width: 768px)"
+            type="image/webp"
+            srcset="/assets/images/hero-firstview-generated-mobile.webp" />
+          <source
+            media="(max-width: 768px)"
+            srcset="/assets/images/hero-firstview-generated-mobile.jpg" />
+          <source type="image/webp" srcset="/assets/images/hero-firstview-generated.webp" />
+          <img
+            src="/assets/images/hero-firstview-generated.jpg"
+            alt="少年野球のグラウンドとバイオレッツの野球ボール"
+            width="1926"
+            height="816"
+            fetchpriority="high" />
         </picture>
         <div class="hero-overlay" [class.hero-overlay--ready]="pageReady()">
           <h1><span class="hero-overlay__title-line">打て、走れ、</span><span class="hero-overlay__title-line">笑え。</span></h1>
@@ -79,7 +97,15 @@
 
       <div class="hero-quick page-container" [class.hero-quick--visible]="heroQuickActive()">
         <article class="join-promo">
-          <img src="/assets/images/join-promo-card.png" alt="仲間と一緒に成長しよう！見学・体験はいつでも大歓迎！" />
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/join-promo-card.webp" />
+            <img
+              src="/assets/images/join-promo-card.jpg"
+              alt="仲間と一緒に成長しよう！見学・体験はいつでも大歓迎！"
+              width="1200"
+              height="623"
+              decoding="async" />
+          </picture>
           <a href="#join">入団案内を見る <span>⚾</span></a>
         </article>
       </div>
@@ -95,9 +121,9 @@
             楽しさから始まり、目標に向かって一生懸命取り組む選手たちを全力でサポートします。
           </p>
           <div class="ref-stat-row">
-            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>15名</strong><small>部員数<br>4年生13名・1年生2名</small></article>
-            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>週3日</strong><small>練習日<br>火・木・金<br>土日練習試合あり</small></article>
-            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" /><strong>桔梗野小学校</strong><small>活動場所<br>グラウンド</small></article>
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" width="44" height="44" loading="lazy" decoding="async" /><strong>15名</strong><small>部員数<br>4年生13名・1年生2名</small></article>
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" width="44" height="44" loading="lazy" decoding="async" /><strong>週3日</strong><small>練習日<br>火・木・金<br>土日練習試合あり</small></article>
+            <article><img class="baseball-icon" src="/assets/images/baseball-icon.svg" alt="" width="44" height="44" loading="lazy" decoding="async" /><strong>桔梗野小学校</strong><small>活動場所<br>グラウンド</small></article>
           </div>
         </div>
 
@@ -106,8 +132,28 @@
           class="ref-about-visual"
           [class.ref-about-visual--visible]="aboutVisualActive()"
         >
-          <img src="/assets/images/intro-team-4.jpg" alt="桔梗野グラウンドの様子" />
-          <img class="about-baseball-accent" src="/assets/images/about-baseball-small.png" alt="" aria-hidden="true" />
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-4.webp" />
+            <img
+              src="/assets/images/intro-team-4.jpg"
+              alt="桔梗野グラウンドの様子"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/about-baseball-small.webp" />
+            <img
+              class="about-baseball-accent"
+              src="/assets/images/about-baseball-small.png"
+              alt=""
+              aria-hidden="true"
+              width="240"
+              height="240"
+              loading="lazy"
+              decoding="async" />
+          </picture>
           <article class="coach-message">
             <h3>監督メッセージ</h3>
             <p>
@@ -122,10 +168,17 @@
 
     <section id="achievements" class="reference-section achievement-panel">
       <div class="page-container">
-        <img
-          class="achievement-image"
-          src="/assets/images/achievements-card.png"
-          alt="主な大会実績 スポ少大会 県大会出場 県少年大会 八戸市ベスト８ 市川地区親善試合 優勝 新人戦 ベスト８ Tボールフェスタ １位" />
+        <picture class="img-fmt">
+          <source type="image/webp" srcset="/assets/images/achievements-card.webp" />
+          <img
+            class="achievement-image"
+            src="/assets/images/achievements-card.png"
+            alt="主な大会実績 スポ少大会 県大会出場 県少年大会 八戸市ベスト８ 市川地区親善試合 優勝 新人戦 ベスト８ Tボールフェスタ １位"
+            width="1200"
+            height="1500"
+            loading="lazy"
+            decoding="async" />
+        </picture>
 
         <article class="tournament-result" aria-labelledby="tournament-result-title">
           <div class="tournament-result__head">
@@ -190,9 +243,16 @@
             <div class="ref-calendar__legend"><span></span>練習 <span></span>練習試合 <span></span>試合 <span></span>休み</div>
           </div>
           <div class="annual-schedule">
-            <img
-              src="/assets/images/annual-schedule-card.png"
-              alt="年間予定 1月 体力強化期間 2月 体力強化期間 3月 体力強化期間 4月 グランド開き 5月 学童大会 6月 スポ少大会 7月 県少年大会 8月 桔梗野祭り参加 9月 新人戦 10月 SG杯 11月 ６年生を送る会 12月 クリスマス会" />
+            <picture class="img-fmt">
+              <source type="image/webp" srcset="/assets/images/annual-schedule-card.webp" />
+              <img
+                src="/assets/images/annual-schedule-card.png"
+                alt="年間予定 1月 体力強化期間 2月 体力強化期間 3月 体力強化期間 4月 グランド開き 5月 学童大会 6月 スポ少大会 7月 県少年大会 8月 桔梗野祭り参加 9月 新人戦 10月 SG杯 11月 ６年生を送る会 12月 クリスマス会"
+                width="1200"
+                height="1600"
+                loading="lazy"
+                decoding="async" />
+            </picture>
           </div>
         </div>
         <div class="ref-notices">
@@ -225,7 +285,7 @@
             @for (step of joinSteps(); track step.number) {
             <article>
               <small>STEP {{ step.number }}</small>
-              <img class="join-step-icon" src="/assets/images/baseball-icon.svg" alt="" />
+              <img class="join-step-icon" src="/assets/images/baseball-icon.svg" alt="" width="78" height="78" loading="lazy" decoding="async" />
               <h3>{{ step.title }}</h3>
               <p>{{ step.text }}</p>
             </article>
@@ -238,12 +298,19 @@
             }
             <p>☑ 着替え</p>
           </aside>
-          <img
-            #joinVisualImage
-            class="join-guide__visual"
-            [class.join-guide__visual--visible]="joinVisualActive()"
-            src="/assets/images/intro-team-5.jpg"
-            alt="野球道具" />
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-5.webp" />
+            <img
+              #joinVisualImage
+              class="join-guide__visual"
+              [class.join-guide__visual--visible]="joinVisualActive()"
+              src="/assets/images/intro-team-5.jpg"
+              alt="野球道具"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
         </div>
         <div class="join-cta"><strong>体験・見学はいつでも大歓迎！</strong><span>まずはお気軽にお問い合わせください。</span><a href="#contact">体験申込・お問い合わせはこちら　›</a></div>
       </div>
@@ -253,12 +320,66 @@
       <div class="page-container">
         <header class="ref-heading"><h2>ギャラリー</h2><p>バイオレッツの活動の様子</p></header>
         <div class="ref-gallery-grid">
-          <img src="/assets/images/intro-team-4.jpg" alt="野球場" />
-          <img src="/assets/images/intro-team-5.jpg" alt="野球道具" />
-          <img src="/assets/images/intro-team-1.jpg" alt="練習風景" />
-          <img src="/assets/images/intro-team-3.jpg" alt="整列する選手" />
-          <img src="/assets/images/intro-team-2.jpg" alt="集合写真" />
-          <img src="/assets/images/hero-team-desktop.jpg" alt="チーム集合写真" />
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-4.webp" />
+            <img
+              src="/assets/images/intro-team-4.jpg"
+              alt="野球場"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-5.webp" />
+            <img
+              src="/assets/images/intro-team-5.jpg"
+              alt="野球道具"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-1.webp" />
+            <img
+              src="/assets/images/intro-team-1.jpg"
+              alt="練習風景"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-3.webp" />
+            <img
+              src="/assets/images/intro-team-3.jpg"
+              alt="整列する選手"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/intro-team-2.webp" />
+            <img
+              src="/assets/images/intro-team-2.jpg"
+              alt="集合写真"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
+          <picture class="img-fmt">
+            <source type="image/webp" srcset="/assets/images/hero-team-desktop.webp" />
+            <img
+              src="/assets/images/hero-team-desktop.jpg"
+              alt="チーム集合写真"
+              width="1100"
+              height="735"
+              loading="lazy"
+              decoding="async" />
+          </picture>
         </div>
       </div>
     </section>

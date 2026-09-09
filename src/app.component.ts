@@ -90,7 +90,10 @@ interface JoinStep {
 }
 
 interface PlayerIntroItem {
+  /** WebP 非対応ブラウザ向けのフォールバック（透過 PNG） */
   src: string;
+  /** 通常配信するのはこちら（同じ画像の WebP 版で約 1/10 のサイズ） */
+  webp: string;
   alt: string;
   position: string;
 }
@@ -128,22 +131,23 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   private motionMediaQuery?: MediaQueryList;
   private firstPlayerImageReady?: Promise<void>;
   private playerIntroImagesWarmed = false;
+  private webpSupported?: boolean;
   private readonly firstPlayerFrameDelayMs = 1480;
   private readonly playerFrameDelayMs = 1120;
   private readonly heroParallaxLimit = 24;
 
   readonly playerIntroPlayers: PlayerIntroItem[] = [
-    { src: '/assets/images/player-intro/player-01.png', alt: '投球フォームの選手', position: 'Pitcher' },
-    { src: '/assets/images/player-intro/player-02.png', alt: 'バッターボックスに立つ選手', position: 'Batter' },
-    { src: '/assets/images/player-intro/player-03.png', alt: '投球後のフォームの選手', position: 'Pitcher' },
-    { src: '/assets/images/player-intro/player-04.png', alt: 'バットを構える選手', position: 'Batter' },
-    { src: '/assets/images/player-intro/player-05.png', alt: '低い姿勢で投げる選手', position: 'Pitcher' },
-    { src: '/assets/images/player-intro/player-06.png', alt: 'ボールを投げる選手', position: 'Pitcher' },
-    { src: '/assets/images/player-intro/player-07.png', alt: '緑のバットを構える選手', position: 'Batter' },
-    { src: '/assets/images/player-intro/player-08.png', alt: '赤いバットを構える選手', position: 'Batter' },
-    { src: '/assets/images/player-intro/player-09.png', alt: '青いバットを構える選手', position: 'Batter' },
-    { src: '/assets/images/player-intro/player-10.png', alt: 'キャッチャー防具をつけた選手', position: 'Catcher' },
-    { src: '/assets/images/player-intro/player-11.png', alt: '黒いバットを構える選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-01.png', webp: '/assets/images/player-intro/player-01.webp', alt: '投球フォームの選手', position: 'Pitcher' },
+    { src: '/assets/images/player-intro/player-02.png', webp: '/assets/images/player-intro/player-02.webp', alt: 'バッターボックスに立つ選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-03.png', webp: '/assets/images/player-intro/player-03.webp', alt: '投球後のフォームの選手', position: 'Pitcher' },
+    { src: '/assets/images/player-intro/player-04.png', webp: '/assets/images/player-intro/player-04.webp', alt: 'バットを構える選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-05.png', webp: '/assets/images/player-intro/player-05.webp', alt: '低い姿勢で投げる選手', position: 'Pitcher' },
+    { src: '/assets/images/player-intro/player-06.png', webp: '/assets/images/player-intro/player-06.webp', alt: 'ボールを投げる選手', position: 'Pitcher' },
+    { src: '/assets/images/player-intro/player-07.png', webp: '/assets/images/player-intro/player-07.webp', alt: '緑のバットを構える選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-08.png', webp: '/assets/images/player-intro/player-08.webp', alt: '赤いバットを構える選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-09.png', webp: '/assets/images/player-intro/player-09.webp', alt: '青いバットを構える選手', position: 'Batter' },
+    { src: '/assets/images/player-intro/player-10.png', webp: '/assets/images/player-intro/player-10.webp', alt: 'キャッチャー防具をつけた選手', position: 'Catcher' },
+    { src: '/assets/images/player-intro/player-11.png', webp: '/assets/images/player-intro/player-11.webp', alt: '黒いバットを構える選手', position: 'Batter' },
   ];
 
   readonly heroPhotoSlot: PhotoSlot = {
@@ -519,11 +523,76 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
 
     this.playerIntroImagesWarmed = true;
+
+    // 1 枚目だけは表示直前に必要なので必ず先読みする。
     void this.ensureFirstPlayerImageReady();
 
-    this.playerIntroPlayers.slice(1).forEach((player) => {
-      void this.preloadPlayerImage(player.src);
-    });
+    // 通信量を抑えたい環境では 2 枚目以降の先読みを行わず、表示時に読み込ませる。
+    if (this.shouldSkipPlayerIntroPrefetch()) {
+      return;
+    }
+
+    void this.warmRemainingPlayerIntroImages();
+  }
+
+  /**
+   * 2 枚目以降は 1 枚ずつ順番に読み込む。
+   * 11 枚を同時にリクエストすると初回表示時の帯域を奪ってしまうため。
+   */
+  private async warmRemainingPlayerIntroImages(): Promise<void> {
+    for (const player of this.playerIntroPlayers.slice(1)) {
+      await this.preloadPlayerImage(this.playerImageSource(player));
+    }
+  }
+
+  /** Save-Data 指定時や低速回線では先読みしない。 */
+  private shouldSkipPlayerIntroPrefetch(): boolean {
+    if (typeof navigator === 'undefined') {
+      return false;
+    }
+
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+
+    if (!connection) {
+      return false;
+    }
+
+    if (connection.saveData) {
+      return true;
+    }
+
+    return connection.effectiveType === 'slow-2g'
+      || connection.effectiveType === '2g'
+      || connection.effectiveType === '3g';
+  }
+
+  /** テンプレート側の <picture> と同じ判断を JS の先読みでも行う。 */
+  private playerImageSource(player: PlayerIntroItem): string {
+    return this.supportsWebp() ? player.webp : player.src;
+  }
+
+  private supportsWebp(): boolean {
+    if (this.webpSupported !== undefined) {
+      return this.webpSupported;
+    }
+
+    if (typeof document === 'undefined') {
+      this.webpSupported = false;
+      return this.webpSupported;
+    }
+
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      this.webpSupported = canvas.toDataURL('image/webp').startsWith('data:image/webp');
+    } catch {
+      this.webpSupported = false;
+    }
+
+    return this.webpSupported;
   }
 
   private ensureFirstPlayerImageReady(): Promise<void> {
@@ -533,7 +602,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
 
     if (!this.firstPlayerImageReady) {
-      this.firstPlayerImageReady = this.preloadPlayerImage(firstPlayer.src);
+      this.firstPlayerImageReady = this.preloadPlayerImage(this.playerImageSource(firstPlayer));
     }
 
     return this.firstPlayerImageReady;
