@@ -79,7 +79,8 @@ interface TournamentResult {
   period: string;
   name: string;
   rank: string;
-  games: TournamentGame[];
+  /** 各試合のスコアが判明している大会だけ設定する */
+  games?: TournamentGame[];
   thanks: string;
 }
 
@@ -235,16 +236,30 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     { title: 'Tボールフェスタ', result: '【１位】' },
   ]);
 
-  readonly tournamentResult = signal<TournamentResult>({
-    period: '2026年8月',
-    name: '新人戦',
-    rank: 'ベスト8',
-    games: [
-      { round: '1回戦', opponent: '多賀台', scoreLeft: '4', scoreRight: '7' },
-      { round: '2回戦', opponent: '白山台', scoreLeft: '12', scoreRight: '6' },
-    ],
-    thanks: '応援ありがとうございました',
-  });
+  readonly tournamentResults = signal<TournamentResult[]>([
+    {
+      period: '2026年9月',
+      name: '北地区新人戦',
+      rank: '準優勝',
+      thanks: '応援ありがとうございました',
+    },
+    {
+      period: '2026年9月',
+      name: 'ナガセケンコー杯',
+      rank: '1回戦敗退',
+      thanks: '応援ありがとうございました',
+    },
+    {
+      period: '2026年8月',
+      name: '新人戦',
+      rank: 'ベスト8',
+      games: [
+        { round: '1回戦', opponent: '多賀台', scoreLeft: '4', scoreRight: '7' },
+        { round: '2回戦', opponent: '白山台', scoreLeft: '12', scoreRight: '6' },
+      ],
+      thanks: '応援ありがとうございました',
+    },
+  ]);
 
   readonly gameResults = signal<GameResult[]>([
     { date: '10.14', opponent: '市川クラブ', score: '7 - 4', result: 'WIN' },
