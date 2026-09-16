@@ -180,31 +180,37 @@
             decoding="async" />
         </picture>
 
-        <article class="tournament-result" aria-labelledby="tournament-result-title">
-          <div class="tournament-result__head">
-            <p class="tournament-result__period">{{ tournamentResult().period }}</p>
-            <h3 id="tournament-result-title" class="tournament-result__title">
-              <span>{{ tournamentResult().name }}</span>
-              <strong>{{ tournamentResult().rank }}</strong>
-            </h3>
-            <p class="tournament-result__team">
-              桔梗野バイオレッツ
-              <small>KIKYONO VIOLETS</small>
-            </p>
-          </div>
-          <ol class="tournament-result__games">
-            @for (game of tournamentResult().games; track game.round) {
-            <li>
-              <span class="tournament-result__round">{{ game.round }}</span>
-              <span class="tournament-result__opponent">{{ game.opponent }}</span>
-              <span class="tournament-result__score">
-                <b>{{ game.scoreLeft }}</b><i>対</i><b>{{ game.scoreRight }}</b>
-              </span>
-            </li>
+        <div class="tournament-results">
+          @for (tournament of tournamentResults(); track tournament.period + tournament.name) {
+          <article class="tournament-result" [attr.aria-labelledby]="'tournament-result-title-' + $index">
+            <div class="tournament-result__head">
+              <p class="tournament-result__period">{{ tournament.period }}</p>
+              <h3 [id]="'tournament-result-title-' + $index" class="tournament-result__title">
+                <span>{{ tournament.name }}</span>
+                <strong>{{ tournament.rank }}</strong>
+              </h3>
+              <p class="tournament-result__team">
+                桔梗野バイオレッツ
+                <small>KIKYONO VIOLETS</small>
+              </p>
+            </div>
+            @if (tournament.games?.length) {
+            <ol class="tournament-result__games">
+              @for (game of tournament.games; track game.round) {
+              <li>
+                <span class="tournament-result__round">{{ game.round }}</span>
+                <span class="tournament-result__opponent">{{ game.opponent }}</span>
+                <span class="tournament-result__score">
+                  <b>{{ game.scoreLeft }}</b><i>対</i><b>{{ game.scoreRight }}</b>
+                </span>
+              </li>
+              }
+            </ol>
             }
-          </ol>
-          <p class="tournament-result__thanks">{{ tournamentResult().thanks }}</p>
-        </article>
+            <p class="tournament-result__thanks">{{ tournament.thanks }}</p>
+          </article>
+          }
+        </div>
       </div>
     </section>
 
